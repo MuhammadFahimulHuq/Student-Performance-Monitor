@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Dashboard;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Registration;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,10 +16,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('pages/login');
-});
+// Route::get('/', function () {
+//     return view('pages.test');
+// });
+
+// Route::get('/dd', [Registration::class,'deadCall'])->name('dd');
+Route::get('/registration', [Registration::class, 'reg'])->name('registraton');
+Route::POST('/valideteReg', [Registration::class, 'validating'])->name('validationReg');
+
+Route::get('/', [Dashboard::class, 'login'])->name('login');
+Route::POST('/', [Dashboard::class, 'validation'])->name('validationLogin');
+Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboard');
+
 
 Route::get('/studentdashboard', function () {
     return view('pages/studentdashboard');
 });
+
+// Auth::routes();
+
+// Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

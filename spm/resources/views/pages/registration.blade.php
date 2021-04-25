@@ -11,7 +11,6 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
 </head>
 
 <body class="wrapper fadeInDown">
@@ -25,12 +24,7 @@
         </div>
     </header>
     <div class="box2">
-
-        @if (session()->has('message'))
-            <div class="alert alert-danger">{{ session()->get('message') }}</div>
-        @endif
-
-        <form action="{{ route('validationLogin') }}" id="box-id-2" method="POST">
+        <form action="{{ route('validationReg') }}" id="box-id-2" method="POST">
             @csrf
             <p> </p>
 
@@ -43,10 +37,17 @@
             <img class="img-fix" src="img/PikPng.com_lock-png_1220187.png">
             <input class="EEN" type="password" placeholder="Password" name="password" required><br><br>
             @error('password')
+            <h1>{{ $message }}</h1>
+            @enderror
+
+            <img class="img-fix" src="img/Sample_User_Icon.png">
+            <input class="EEN" type="text" placeholder="user-type" name="userType" required><br><br>
+            @error('type')
                 <h1>{{ $message }}</h1>
             @enderror
+
             <span class="AB">
-                <input id="BTN1" class="BTTN" type="submit" value="Login">
+                <input id="BTN1" class="BTTN" type="submit" value="Registration">
             </span>
         </form><br>
     </div>
