@@ -1,0 +1,220 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital@1&display=swap");
+body {
+    margin: 0px;
+    display: wrap;
+    justify-self: flex-start;
+    background: url("./bg-01.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.box1 {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100%;
+    padding: 20px;
+    width: 100%;
+}
+
+.first {
+    text-align: center;
+    font-size: 1em;
+    border-radius: 25px;
+    background: #ceddeb;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: Roboto;
+    display: inline-block;
+    justify-self: center;
+    opacity: 0.7;
+    color: rgb(41, 40, 40);
+    margin-bottom: 0%;
+    transition: all 1s;
+}
+
+.box2 {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    min-height: 100%;
+    padding: 20px;
+    max-width: 100rem;
+}
+
+#box-id-2 {
+    font-family: Roboto Slab;
+    border-radius: 20px;
+    background: #ceddeb;
+    padding: 30px;
+    opacity: 0.7;
+    transition: all 1s;
+    justify-content: left;
+}
+
+.img-fix {
+    height: 40px;
+    width: 40px;
+}
+
+.EEN {
+    padding: 15px;
+    height: 2rem;
+    width: 15rem;
+    border-radius: 30px;
+}
+
+.AB {
+    margin-top: 20px;
+    display: flex;
+    height: 3rem;
+    justify-content: center;
+    text-align: center;
+}
+
+#drop-down {
+    padding: 14px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+.content {
+    position: absolute;
+    background-color: trasparent;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+.BTTN {
+    height: 50spx;
+    background-image: linear-gradient(to right, #24bce3, #f506fe);
+    min-width: 200px;
+    border: none;
+    border-radius: 10px;
+    color: rgb(255, 255, 255);
+    font-family: Ubuntu;
+    position: relative;
+    transition: 1s;
+    -webkit-tap-highlight-color: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding-top: 5px;
+    font-size: 2em;
+    transition: all 0.4s;
+}
+
+.BTTN:hover {
+    transition: all 0.4s;
+    background-image: linear-gradient(to right, #f506fe, #24bce3);
+    opacity: 0.8;
+}
+
+.fadeInDown {
+    -webkit-animation-name: fadeInDown;
+    animation-name: fadeInDown;
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        -webkit-transform: translate3d(0, -100%, 0);
+        transform: translate3d(0, -100%, 0);
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: none;
+        transform: none;
+    }
+}
+
+/* Simple CSS3 Fade-in Animation */
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@-moz-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.fadeIn {
+    opacity: 0;
+    -webkit-animation: fadeIn ease-in 1;
+    -moz-animation: fadeIn ease-in 1;
+    animation: fadeIn ease-in 1;
+
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+
+    -webkit-animation-duration: 1s;
+    -moz-animation-duration: 1s;
+    animation-duration: 1s;
+}
+
+.fadeIn.first {
+    -webkit-animation-delay: 0.4s;
+    -moz-animation-delay: 0.4s;
+    animation-delay: 0.4s;
+}
+
+.fadeIn.second {
+    -webkit-animation-delay: 0.6s;
+    -moz-animation-delay: 0.6s;
+    animation-delay: 0.6s;
+}
+
+.fadeIn.third {
+    -webkit-animation-delay: 0.8s;
+    -moz-animation-delay: 0.8s;
+    animation-delay: 0.8s;
+}
+
+.fadeIn.fourth {
+    -webkit-animation-delay: 1s;
+    -moz-animation-delay: 1s;
+    animation-delay: 1s;
+}

@@ -1,4 +1,2 @@
-Check ERD
-make RELATIONAL SCHEMA
 make NORMALIZATION
-make DATA DICTIONARY
+combine report 2
