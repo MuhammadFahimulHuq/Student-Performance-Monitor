@@ -13,7 +13,7 @@ class CreateRegister extends Migration
      */
     public function up()
     {
-        Schema::create('register', function (Blueprint $table) {
+        Schema::create('registers', function (Blueprint $table) {
             $table->bigIncrements('registerID')->start_from(1000);
             
             
@@ -40,6 +40,6 @@ class CreateRegister extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('register');
+        Schema::dropIfExists('registers');
     }
 }

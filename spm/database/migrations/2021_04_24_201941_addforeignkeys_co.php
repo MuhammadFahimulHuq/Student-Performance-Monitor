@@ -15,7 +15,7 @@ class AddforeignkeysCo extends Migration
     {
         Schema::table('co', function (Blueprint $table) {
             $table->foreign('plo_ID')->references('ploID')->on('plo')->onDelete('cascade');
-              $table->foreign('course_ID')->references('courseID')->on('course')->onDelete('cascade');
+              $table->foreign('course_ID')->references('courseID')->on('courses')->onDelete('cascade');
         });
     }
 

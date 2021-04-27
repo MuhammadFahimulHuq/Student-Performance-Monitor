@@ -13,7 +13,7 @@ class CreateDeanTable extends Migration
      */
     public function up()
     {
-        Schema::create('dean', function (Blueprint $table) {
+        Schema::create('deans', function (Blueprint $table) {
             $table->date('startDate');
             $table->date('endDate');
         });
@@ -26,6 +26,6 @@ class CreateDeanTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('dean');
+        Schema::dropIfExists('deans');
     }
 }

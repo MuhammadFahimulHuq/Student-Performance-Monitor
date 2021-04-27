@@ -13,7 +13,7 @@ class CreateHeadOfDeptTable extends Migration
      */
     public function up()
     {
-        Schema::create('head_of_dept', function (Blueprint $table) {
+        Schema::create('head_of_depts', function (Blueprint $table) {
             $table->date('startDate');
             $table->date('endDate');
         });
@@ -26,6 +26,6 @@ class CreateHeadOfDeptTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('head_of_dept');
+        Schema::dropIfExists('head_of_depts');
     }
 }
