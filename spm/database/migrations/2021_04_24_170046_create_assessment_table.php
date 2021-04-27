@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMarksdistributionTable extends Migration
+class CreateAssessmentTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateMarksdistributionTable extends Migration
      */
     public function up()
     {
-        Schema::create('marksdistribution', function (Blueprint $table) {
-            $table->bigIncrements('marksDistributionID');
+        Schema::create('assessments', function (Blueprint $table) {
+            $table->bigIncrements('assessmentID');
             $table->integer('marksObtainable');
             $table->string('assessmentType');
             $table->string('questionNo');
-
+            $table->string('assessmentPecentage');
              #foreign key section
              $table->unsignedBigInteger('co_ID');
         
@@ -37,6 +37,6 @@ class CreateMarksdistributionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('marksdistrubution');
+        Schema::dropIfExists('assessments');
     }
 }

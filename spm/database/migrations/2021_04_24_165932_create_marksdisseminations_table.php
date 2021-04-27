@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAssessmentTable extends Migration
+class CreateMarksDisseminationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateAssessmentTable extends Migration
      */
     public function up()
     {
-        Schema::create('assessment', function (Blueprint $table) {
-            $table->bigIncrements('assessmentID');
+        Schema::create('marksdisseminations', function (Blueprint $table) {
+            $table->bigIncrements('marksdisseminationsID');
             $table->integer('marksObtained');
 
                #foreign key section
                $table->unsignedBigInteger('student_ID');
-               $table->unsignedBigInteger('marksDistribution_ID');
+               $table->unsignedBigInteger('assessment_ID');
               
    
             //    $table->foreign('student_ID')->references('studentID')->on('employee')->onDelete('cascade');
@@ -35,6 +35,6 @@ class CreateAssessmentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('assessment');
+        Schema::dropIfExists('marksdisseminations');
     }
 }

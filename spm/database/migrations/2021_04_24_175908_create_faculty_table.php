@@ -13,7 +13,7 @@ class CreateFacultyTable extends Migration
      */
     public function up()
     {
-        Schema::create('faculty', function (Blueprint $table) {
+        Schema::create('faculties', function (Blueprint $table) {
             $table->id('deptID');
         });
     }
@@ -25,6 +25,6 @@ class CreateFacultyTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('faculty');
+        Schema::dropIfExists('faculties');
     }
 }

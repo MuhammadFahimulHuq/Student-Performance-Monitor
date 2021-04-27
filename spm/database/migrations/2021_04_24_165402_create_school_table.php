@@ -13,7 +13,7 @@ class CreateSchoolTable extends Migration
      */
     public function up()
     {
-        Schema::create('school', function (Blueprint $table) {
+        Schema::create('schools', function (Blueprint $table) {
             $table->bigIncrements('schoolID');
             $table->string('schoolName');
             $table->integer('schoolNo');
@@ -29,6 +29,6 @@ class CreateSchoolTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('school');
+        Schema::dropIfExists('schools');
     }
 }

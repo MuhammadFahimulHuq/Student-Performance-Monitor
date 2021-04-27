@@ -13,7 +13,7 @@ class CreateSemesterTable extends Migration
      */
     public function up()
     {
-        Schema::create('semester', function (Blueprint $table) {
+        Schema::create('semesters', function (Blueprint $table) {
             $table->bigIncrements('semesterID');
             $table->string('semesterName');
             $table->date('startDate');
@@ -28,6 +28,6 @@ class CreateSemesterTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('semester');
+        Schema::dropIfExists('semesters');
     }
 }
