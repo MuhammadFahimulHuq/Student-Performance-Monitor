@@ -1,0 +1,12 @@
+INSERT INTO 'faculties' (FEmployeeID,departmentID)
+
+VALUES
+('1','CSE'), 
+('2','EEE'),
+('3','PS'), 
+('4','ENV'),
+('5','DLS'), 
+('6','CMN'), 
+('7','ENG'), 
+('8','SOC'), 
+('9','LAW'), 

@@ -1,0 +1,15 @@
+INSERT INTO 'programs' (programID,programCode,programName,departmentID)
+
+ 
+VALUES
+('1','B.Sc In CSE','Bachelor Of Science In Computer Science & Engineering ','CSE'), 
+('2','B.Sc In EEE','Bachelor Of Science In Electrical & Electronic Engineering','EEE'), 
+('3','B.Sc In ETE','Bachelor Of Science In Electronic & TeleCommunication Engineering','EEE'), 
+('4','BBA','Business Of Business Administration','BBA'), 
+('5','B.Sc In LWRM','Bachelor Of Science In Land & Water Resource Managemant','ENV'),
+('6','B.Sc In PHY','Bachelor Of Science In Physics','PS'),
+('7','B.Sc In MATH','Bachelor Of Science In Mathmatics','PS'),
+('8','BSS In ANT','Bachelor Of Social Science In Antropology','SOC'),
+('9','BSS In CMN','Bachelor Of Social Science In Media & Communication','CMN'),
+('10','BA In ELT ','Bachelor Of Arts In English Literature & Teaching','ENG'), 
+('11','LLB','Bachelor Of Law','LAW'),

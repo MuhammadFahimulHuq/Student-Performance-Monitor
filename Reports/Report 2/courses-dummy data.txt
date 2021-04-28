@@ -1,0 +1,18 @@
+INSERT INTO 'courses' (courseID,courseName,noOfCredit,programID,)
+
+VALUES
+('CSE101+L','Introduction to Computer Programming Language','4','B.S.C),
+('CSE104+L','Electrical Circuit Analysis','4','B.S.C),
+('CSE203+L','Data Structure','4','B.S.C),
+('CSE211+L','Algorithms','4','B.S.C),
+('CSE214','Computer Organization & Architecture','3','B.S.C),
+('CSE216+L','Microprocessor Interfacing & Assembly Language','4','B.S.C),
+('CSE303+L','Database Management','4','B.S.C),
+('CSE313','Compiler Construction','3','B.S.C),
+('CSE307','System Analysis and Design','3','B.S.C),
+('CSE310+L','Electronics II ','4','B.S.C),
+('CSE317+L','Numerical Methods','4','B.S.C),
+('CSE316+L','Data Communication & Computer Networks','4','B.S.C),
+('CSE306','Web Application & Internet','3','B.S.C),
+
+
