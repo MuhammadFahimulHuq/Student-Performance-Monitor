@@ -13,7 +13,7 @@ class AddforeignkeysmarksDisseminations extends Migration
      */
     public function up()
     {
-        Schema::table('marksDisseminations', function (Blueprint $table) {
+        Schema::table('marksdisseminations', function (Blueprint $table) {
             $table->foreign('student_ID')->references('studentID')->on('students')->onDelete('cascade');
              $table->foreign('assessment_ID')->references('assessmentID')->on('assessments')->onDelete('cascade');
         });

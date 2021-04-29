@@ -17,7 +17,7 @@
     <header>
         <div class="box1">
             <div class="first">
-                <img src="/img/iub_logo.png" width="280px" height="180px">
+                <a href="{{ route('populate') }}"><img src="/img/iub_logo.png" width="280px" height="180px"></a>
                 <h1>Student Performance Monitor</h1>
             </div>
             {{-- <h1 class="first">Login</h1> --}}
@@ -27,7 +27,11 @@
         <form action="{{ route('validationReg') }}" id="box-id-2" method="POST">
             @csrf
             <p> </p>
-
+            @if (session()->has('error'))
+                <div class="alert alert-danger">{{ session()->get('error') }}</div>
+            @elseif (session()->has('message'))
+                <div class="alert alert-success">{{ session()->get('message') }}</div>
+            @endif
             <img class="img-fix" src="img/Sample_User_Icon.png">
             <input class="EEN" type="text" placeholder="Usernmae" name="username" required><br><br>
             @error('username')
@@ -37,7 +41,7 @@
             <img class="img-fix" src="img/PikPng.com_lock-png_1220187.png">
             <input class="EEN" type="password" placeholder="Password" name="password" required><br><br>
             @error('password')
-            <h1>{{ $message }}</h1>
+                <h1>{{ $message }}</h1>
             @enderror
 
             <img class="img-fix" src="img/Sample_User_Icon.png">
@@ -46,10 +50,22 @@
                 <h1>{{ $message }}</h1>
             @enderror
 
+            <img class="img-fix" src="img/PikPng.com_lock-png_1220187.png">
+            <input class="EEN" type="password" placeholder="Auth-Code" name="AuthCode" required><br><br>
+            @error('password')
+                <h1>{{ $message }}</h1>
+            @enderror
+
             <span class="AB">
                 <input id="BTN1" class="BTTN" type="submit" value="Registration">
             </span>
         </form><br>
+        {{-- <form action="{{ route('populate') }}" id="box-id-2" method="POST">
+            @csrf
+            <span class="AB">
+                <input id="" class="BTTN" type="submit" svalue="Populate">
+            </span>
+        </form> --}}
     </div>
 </body>
 
