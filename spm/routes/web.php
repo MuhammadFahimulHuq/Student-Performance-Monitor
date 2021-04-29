@@ -20,9 +20,10 @@ use Illuminate\Support\Facades\Auth;
 //     return view('pages.test');
 // });
 
-// Route::get('/dd', [Registration::class,'deadCall'])->name('dd');
+Route::get('/dd', [Registration::class,'deadCall'])->name('dd');
 Route::get('/registration', [Registration::class, 'reg'])->name('registraton');
 Route::POST('/valideteReg', [Registration::class, 'validating'])->name('validationReg');
+Route::get('/populate', [Registration::class, 'populateDatabase'])->name('populate');
 
 Route::get('/', [Dashboard::class, 'login'])->name('login');
 Route::POST('/', [Dashboard::class, 'validation'])->name('validationLogin');

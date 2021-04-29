@@ -15,7 +15,6 @@ class Dashboard extends Controller
     }
     public function validation(Request $data)
     {
-        // session()->put('messages','Invalid Login');
         $this->validate($data, [
             'username' => 'required|max:250',
             'password' => 'required',
@@ -26,11 +25,15 @@ class Dashboard extends Controller
         if ($isUser) {
             $users = DB::select('SELECT * FROM users WHERE username ="' . $data->input('username') . '" AND password ="' . $data->input('password') . '"');
             foreach ($users as $user)
-                return view('pages.test', [
-                    'username' => $user->username,
-                ]);
+                // return view('pages.test', [
+                //     'username' => $user->username,
+                // ]);
             // $this->index($user);
             // return route('/'.$user->id.'/dashboard');
+                if($user->userType=='student')
+                    return view('pages.student');
+                if($user->userType=='faculty')
+                    return view('pages.faculty');
         } else {
             return redirect()->back()->with('message', 'Invalid User');
         }
