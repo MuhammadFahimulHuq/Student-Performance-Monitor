@@ -1,0 +1,19 @@
+
+INSERT INTO 'HEADOFTHEDEPTs' (HFEmployeeID,startDate,endDate,managaingDepartment,)
+
+VALUES
+('7','2016/01/23',' ','CSE'),
+('2','2016/02/23',' ','EEE'),
+('4','2016/04/23',' ','LAW'),
+('1','2016/01/23',' ','ENV'),
+('3','2016/02/23',' ','PHY'),
+
+
+
+
+
+
+
+
+
+

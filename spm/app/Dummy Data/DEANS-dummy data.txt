@@ -1,0 +1,18 @@
+
+INSERT INTO 'DEANs' (DFEmployeeID,startDate,endDate,managaingSchool,)
+
+VALUES
+('6','2016/01/15',' ','1',),
+('9','2016/02/20','2020/02/20','2',),
+
+
+
+
+
+
+
+
+
+
+
+

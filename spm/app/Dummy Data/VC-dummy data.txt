@@ -1,0 +1,20 @@
+
+INSERT INTO 'VCs' (VEmployeeID,joiningDate,LeaveDate,)
+
+VALUES
+('10','2016/01/15','2021/01/15',),
+('5','2021/01/20',' ',),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
