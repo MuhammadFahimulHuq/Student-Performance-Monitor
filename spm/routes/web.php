@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\Login;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Registration;
 use Illuminate\Support\Facades\Auth;
@@ -25,13 +25,13 @@ Route::get('/registration', [Registration::class, 'reg'])->name('registraton');
 Route::POST('/valideteReg', [Registration::class, 'validating'])->name('validationReg');
 Route::get('/populate', [Registration::class, 'populateDatabase'])->name('populate');
 
-Route::get('/', [Dashboard::class, 'login'])->name('login');
-Route::POST('/', [Dashboard::class, 'validation'])->name('validationLogin');
-Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboard');
+Route::get('/', [Login::class, 'login'])->name('login');
+Route::POST('/', [Login::class, 'validation'])->name('validationLogin');
+Route::get('/dashboard', [Login::class, 'index'])->name('dashboard');
 
 
-Route::get('/studentdashboard', function () {
-    return view('pages/studentdashboard');
+Route::get('/student', function () {
+    return view('pages/student/overallReport');
 });
 
 // Auth::routes();
