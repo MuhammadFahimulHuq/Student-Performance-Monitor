@@ -13,13 +13,13 @@ class CreateMarksDisseminationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('marksdisseminations', function (Blueprint $table) {
+        Schema::create('marksDisseminations', function (Blueprint $table) {
             $table->bigIncrements('marksdisseminationsID');
             $table->integer('marksObtained');
 
                #foreign key section
-               $table->unsignedBigInteger('student_ID');
-               $table->unsignedBigInteger('assessment_ID');
+               $table->unsignedBigInteger('studentID');
+               $table->unsignedBigInteger('assessmentID');
               
    
             //    $table->foreign('student_ID')->references('studentID')->on('employee')->onDelete('cascade');
@@ -35,6 +35,6 @@ class CreateMarksDisseminationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('marksdisseminations');
+        Schema::dropIfExists('marksDisseminations');
     }
 }

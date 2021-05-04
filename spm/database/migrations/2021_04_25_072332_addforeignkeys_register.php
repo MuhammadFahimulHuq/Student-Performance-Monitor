@@ -14,9 +14,10 @@ class AddforeignkeysRegister extends Migration
     public function up()
     {
         Schema::table('registers', function (Blueprint $table) {
-            $table->foreign('student_ID')->references('studentID')->on('students')->onDelete('cascade');
-             $table->foreign('section_ID')->references('sectionID')->on('sections')->onDelete('cascade');  
-             $table->foreign('semester_ID')->references('semesterID')->on('semesters')->onDelete('cascade');  }); 
+            $table->foreign('studentID')->references('studentID')->on('students')->onDelete('cascade');
+             $table->foreign('sectionID')->references('sectionID')->on('sections')->onDelete('cascade');  
+            
+             }); 
     }
 
     /**

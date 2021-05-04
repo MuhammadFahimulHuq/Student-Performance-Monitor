@@ -16,8 +16,9 @@ class CreateProgramTable extends Migration
         Schema::create('programs', function (Blueprint $table) {
             $table->bigIncrements('programID');
             $table->string('programName');
+            $table->string('programCode');
            #foreign key section
-           $table->unsignedBigInteger('department_ID');
+           $table->unsignedBigInteger('departmentID');
          
 
         //    $table->foreign('department_ID')->references('departmentID')->on('department')->onDelete('cascade');

@@ -15,9 +15,11 @@ class AddforeignkeysSection extends Migration
     {
         Schema::table('sections', function (Blueprint $table) {
   
-            $table->foreign('employee_ID')->references('employeeID')->on('employees')->onDelete('cascade');
-            $table->foreign('course_ID')->references('courseID')->on('courses')->onDelete('cascade');
-            $table->foreign('semester_ID')->references('semesterID')->on('semesters')->onDelete('cascade');
+            $table->foreign('employeeID')->references('employeeID')->on('employees')->onDelete('cascade');
+          
+            $table->foreign('semesterID')->references('semesterID')->on('semesters')->onDelete('cascade');
+          
+            $table->foreign('courseID')->references('courseID')->on('courses')->onDelete('cascade');
         });
     }
 

@@ -18,7 +18,7 @@ class CreateDepartmentTable extends Migration
             $table->string('departmentName');
             $table->integer('departmentNo');
    #foreign key section
-   $table->unsignedBigInteger('school_ID');
+   $table->unsignedBigInteger('schoolID');
 
 
 //    $table->foreign('school_ID')->references('schoolID')->on('school')->onDelete('cascade');

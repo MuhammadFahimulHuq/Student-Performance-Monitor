@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVCTable extends Migration
+class CreateAssessmentTypeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,12 @@ class CreateVCTable extends Migration
      */
     public function up()
     {
-        Schema::create('vcs', function (Blueprint $table) {
-           $table->date('joiningDate');
-           $table->date('leaveDate');
+        Schema::create('assessmentTypes', function (Blueprint $table) {
+            $table->id('assessmentTypeID');
+            $table->string('assessmentType');
+            $table->integer('assessmentPercentage');
+            $table->unsignedBigInteger('sectionID');
+
         });
     }
 
@@ -26,6 +29,6 @@ class CreateVCTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vcs');
+        Schema::dropIfExists('assessmentTypes');
     }
 }

@@ -14,7 +14,7 @@ class AddforeignkeysProgram extends Migration
     public function up()
     {
         Schema::table('programs', function (Blueprint $table) {
-            $table->foreign('department_ID')->references('departmentID')->on('departments')->onDelete('cascade');
+            $table->foreign('departmentID')->references('departmentID')->on('departments')->onDelete('cascade');
         });
     }
 

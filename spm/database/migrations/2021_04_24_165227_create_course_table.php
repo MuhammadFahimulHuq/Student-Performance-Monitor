@@ -14,12 +14,12 @@ class CreateCourseTable extends Migration
     public function up()
     {
         Schema::create('courses', function (Blueprint $table) {
-            $table->bigIncrements('courseID');
+            $table->string('courseID')->primary();
             $table->string('courseName');
             $table->integer('noOfCredit');
 
               #foreign key section
-              $table->unsignedBigInteger('program_ID');
+              $table->unsignedBigInteger('programID');
          
   
             //  

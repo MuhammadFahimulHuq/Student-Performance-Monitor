@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVCTable extends Migration
+class AddforeignkeyAssessmentType extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class CreateVCTable extends Migration
      */
     public function up()
     {
-        Schema::create('vcs', function (Blueprint $table) {
-           $table->date('joiningDate');
-           $table->date('leaveDate');
+        Schema::table('assessmentTypes', function (Blueprint $table) {
+            $table->foreign('sectionID')->references('sectionID')->on('sections')->onDelete('cascade');
         });
     }
 
@@ -26,6 +25,6 @@ class CreateVCTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('vcs');
+        //
     }
 }
