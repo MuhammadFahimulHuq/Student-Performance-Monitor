@@ -59,8 +59,10 @@
                         <span class="user-icon">
                             <img src="#" alt="">
                         </span>
-                        <span class="user-name">USER
-                            {{-- <h4>{{usernmae}}</h4><h3>{{usernType}}</h3> --}}
+                        <span class="user-name">
+                            @foreach ($users as $user)
+                            <h4>{{$user->username}}</h4><h5> {{$user->userType}}</h5>
+                            @endforeach
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">

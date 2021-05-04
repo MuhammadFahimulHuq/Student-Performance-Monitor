@@ -24,12 +24,12 @@ class Login extends Controller
         if ($isUser) {
             $users = DB::select('SELECT * FROM users WHERE username ="' . $data->input('username') . '" AND password ="' . $data->input('password') . '"');
             foreach ($users as $user) {
-                if ($user->userType == 'student')
-                    return app('App\Http\Controllers\Student_D')->index($user);
+                if ($user->userType == 'admin')
+                    return app('App\Http\Controllers\Student_D')->index($user->user_id);
                 if ($user->userType == 'faculty')
-                    return app('App\Http\Controllers\Faculty_D')->index($user);
+                    return app('App\Http\Controllers\Faculty_D')->index($user->user_id);
                 if ($user->userType == 'higherOfficial')
-                    return app('App\Http\Controllers\HigerO_D')->index($user);
+                    return app('App\Http\Controllers\HigerO_D')->index($user->user_id);
             }
         } else {
             return redirect()->back()->with('message', 'Invalid User');
