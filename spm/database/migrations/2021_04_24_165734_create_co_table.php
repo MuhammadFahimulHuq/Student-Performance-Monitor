@@ -13,13 +13,13 @@ class CreateCoTable extends Migration
      */
     public function up()
     {
-        Schema::create('co', function (Blueprint $table) {
+        Schema::create('cos', function (Blueprint $table) {
             $table->bigIncrements('coID');
             $table->integer('coNo');
 
                #foreign key section
-               $table->unsignedBigInteger('course_ID');
-               $table->unsignedBigInteger('plo_ID');
+               $table->string('courseID');
+               $table->unsignedBigInteger('ploID');
            
    
             //    $table->foreign('plo_ID')->references('ploID')->on('plo')->onDelete('cascade');
@@ -35,6 +35,6 @@ class CreateCoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('co');
+        Schema::dropIfExists('cos');
     }
 }

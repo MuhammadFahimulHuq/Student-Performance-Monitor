@@ -13,7 +13,7 @@ class CreateVCTable extends Migration
      */
     public function up()
     {
-        Schema::create('_v_c', function (Blueprint $table) {
+        Schema::create('vcs', function (Blueprint $table) {
            $table->date('joiningDate');
            $table->date('leaveDate');
         });
@@ -26,6 +26,6 @@ class CreateVCTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('_v_c');
+        Schema::dropIfExists('vcs');
     }
 }

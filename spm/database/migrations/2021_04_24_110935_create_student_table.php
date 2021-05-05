@@ -23,6 +23,7 @@ class CreateStudentTable extends Migration
             $table->string('phone');
             $table->string('address');
             $table->date('admissionDate');
+            $table->integer('cgpa');
         });
     }
 

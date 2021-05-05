@@ -18,9 +18,9 @@ class CreateSectionTable extends Migration
             $table->integer('sectionNo');
             
             // #foreign key section
-            $table->unsignedBigInteger('employee_ID');
-            $table->unsignedBigInteger('course_ID');
-            $table->unsignedBigInteger('semester_ID');
+            $table->unsignedBigInteger('employeeID');
+            $table->string('courseID')->unique();
+            $table->unsignedBigInteger('semesterID');
 
             // $table->foreign('employee_ID')->references('employeeID')->on('employee')->onDelete('cascade');
             // $table->foreign('course_ID')->references('courseID')->on('course')->onDelete('cascade');

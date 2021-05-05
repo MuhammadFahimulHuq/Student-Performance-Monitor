@@ -6,12 +6,11 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class Dashboard extends Controller
+class Login extends Controller
 {
     public function login()
     {
         return view('pages.login');
-        // return view('pages.test');
     }
     public function validation(Request $data)
     {
@@ -24,26 +23,16 @@ class Dashboard extends Controller
 
         if ($isUser) {
             $users = DB::select('SELECT * FROM users WHERE username ="' . $data->input('username') . '" AND password ="' . $data->input('password') . '"');
-            foreach ($users as $user)
-                // return view('pages.test', [
-                //     'username' => $user->username,
-                // ]);
-            // $this->index($user);
-            // return route('/'.$user->id.'/dashboard');
-                if($user->userType=='student')
-                    return view('pages.student');
-                if($user->userType=='faculty')
-                    return view('pages.faculty');
+            foreach ($users as $user) {
+                if ($user->userType == 'admin')
+                    return app('App\Http\Controllers\Student_D')->index($user->user_id);
+                if ($user->userType == 'faculty')
+                    return app('App\Http\Controllers\Faculty_D')->index($user->user_id);
+                if ($user->userType == 'higherOfficial')
+                    return app('App\Http\Controllers\HigerO_D')->index($user->user_id);
+            }
         } else {
             return redirect()->back()->with('message', 'Invalid User');
         }
-    }
-
-    public function index($id)
-    {
-        // dd($id);
-        return view('pages.test', [
-            'username' => $id
-        ]);
     }
 }

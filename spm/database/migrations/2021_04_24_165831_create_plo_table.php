@@ -13,14 +13,14 @@ class CreatePloTable extends Migration
      */
     public function up()
     {
-        Schema::create('plo', function (Blueprint $table) {
+        Schema::create('plos', function (Blueprint $table) {
             $table->bigIncrements('ploID');
             $table->integer('ploNo');
             $table->string('details');
 
 
                #foreign key section
-               $table->unsignedBigInteger('program_ID');
+               $table->unsignedBigInteger('programID');
               
    
             //    $table->foreign('program_ID')->references('programID')->on('program')->onDelete('cascade');
@@ -36,6 +36,6 @@ class CreatePloTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('plo');
+        Schema::dropIfExists('plos');
     }
 }

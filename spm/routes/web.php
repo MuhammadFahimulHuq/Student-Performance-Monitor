@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\Dashboard;
+use App\Http\Controllers\Login;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Registration;
+use App\Http\Controllers\Student_D;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -25,15 +26,21 @@ Route::get('/registration', [Registration::class, 'reg'])->name('registraton');
 Route::POST('/valideteReg', [Registration::class, 'validating'])->name('validationReg');
 Route::get('/populate', [Registration::class, 'populateDatabase'])->name('populate');
 
-Route::get('/', [Dashboard::class, 'login'])->name('login');
-Route::POST('/', [Dashboard::class, 'validation'])->name('validationLogin');
-Route::get('/dashboard', [Dashboard::class, 'index'])->name('dashboard');
+Route::get('/', [Login::class, 'login'])->name('login');
+Route::POST('/', [Login::class, 'validation'])->name('validationLogin');
+Route::get('/dashboard', [Login::class, 'index'])->name('dashboard');
 
 
-Route::get('/studentdashboard', function () {
-    return view('pages/studentdashboard');
+Route::get('/studentD', [Student_D::class, 'index']);
+Route::get('/overallReport/{id}/d', [Student_D::class, 'oR']);
+
+Route::get('/student', function () {
+    return view('pages/student/overallReport');
 });
 
+Route::get('/faculty', function () {
+    return view('pages/faculty/facultydashboard');
+});
 // Auth::routes();
 
 // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

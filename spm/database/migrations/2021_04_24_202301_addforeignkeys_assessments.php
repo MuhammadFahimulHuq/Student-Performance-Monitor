@@ -14,9 +14,8 @@ class AddforeignkeysAssessments extends Migration
     public function up()
     {
         Schema::table('assessments', function (Blueprint $table) {
-            $table->foreign('co_ID')->references('coID')->on('co')->onDelete('cascade');
-             
-            $table->foreign('semester_ID')->references('semesterID')->on('semesters')->onDelete('cascade');
+            $table->foreign('coID')->references('coID')->on('cos')->onDelete('cascade');
+ 
         });
     }
 

@@ -35,7 +35,7 @@
             <p> </p>
 
             <img class="img-fix" src="img/Sample_User_Icon.png">
-            <input class="EEN" type="text" placeholder="Usernmae" name="username" required><br><br>
+            <input class="EEN" type="text" placeholder="User" name="username" required><br><br>
             @error('username')
                 <h1>{{ $message }}</h1>
             @enderror
