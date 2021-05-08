@@ -2,17 +2,14 @@
 
 @section('sidebar')
     <li class="dropdown">
-        <a href="#" class="dropdown-toggle">
+        <a href="{{'/studentD/'.$user->user_id.'/d'}}" class="dropdown-toggle">
             <span class="micon dw dw-house-1"></span><span class="mtext">Home</a></span>
         </a>
     </li>
     <li class="dropdown">
-        @foreach ($users as $user)
         <a href="{{'/overallReport/'.$user->user_id.'/d'}}" class="dropdown-toggle">
             <span class="micon dw dw-library"></span><span class="mtext">Overall Report</span>
         </a>
-        @endforeach
-
     </li>
 @endsection
 
