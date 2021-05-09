@@ -60,9 +60,10 @@
                             <img src="#" alt="">
                         </span>
                         <span class="user-name">
-                            @foreach ($users as $user)
-                            <h4>{{$user->username}}</h4><h5> {{$user->userType}}</h5>
-                            @endforeach
+                            {{-- @if(!empty($users->user_id))
+                                {{return route('login')}}
+                            @endif --}}
+                                {{-- <h4>{{$user->username}}</h4><h5> {{$user->userType}}</h5> --}}
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
@@ -164,7 +165,7 @@
     </div>
     <div class="left-side-bar">
         <div class="brand-logo">
-            <a href="index.html">
+            <a href="{{"/"}}">
                 IUB
             </a>
             <div class="close-sidebar" data-toggle="left-sidebar-close">

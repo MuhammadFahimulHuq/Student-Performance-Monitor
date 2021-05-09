@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class department extends Model
 {
-    use HasFactory;
+    public function Faculty()
+    {
+        return $this->hasMany(Faculty::class);
+    }
+    public function program()
+    {
+        return $this->hasMany(Program::class);
+    }
 }

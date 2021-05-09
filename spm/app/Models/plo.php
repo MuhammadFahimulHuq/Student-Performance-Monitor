@@ -5,7 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class plo extends Model
+class Plo extends Model
 {
-    use HasFactory;
+    public function comapping()
+    {
+        return $this->belongsToMany(Comapping::class);
+    }
 }

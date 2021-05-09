@@ -15,15 +15,18 @@ class CreateStudentTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->bigIncrements('studentID');
-            $table->string('firstName');
-            $table->string('lastName');
+            $table->string('firstname');
+            $table->string('lastname');
             $table->string('email');
             $table->string('gender');
             $table->date('dateOfBirth');
             $table->string('phone');
             $table->string('address');
             $table->date('admissionDate');
-            $table->integer('cgpa');
+            $table->float('cgpa');
+
+            //foreign key
+            $table->string('programID');
         });
     }
 

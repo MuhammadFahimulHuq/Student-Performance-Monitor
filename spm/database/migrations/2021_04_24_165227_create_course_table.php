@@ -19,11 +19,11 @@ class CreateCourseTable extends Migration
             $table->integer('noOfCredit');
 
               #foreign key section
-              $table->unsignedBigInteger('programID');
-         
-  
-            //  
-         
+              $table->string('programID');
+
+
+            //
+
         });
     }
 

@@ -5,7 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class semster extends Model
+class AssessmentType extends Model
 {
-    use HasFactory;
+    public function assessment(){
+        return $this->hasMany(Assessment::class);
+    }
 }

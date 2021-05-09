@@ -14,14 +14,14 @@ class CreateMarksDisseminationsTable extends Migration
     public function up()
     {
         Schema::create('marksDisseminations', function (Blueprint $table) {
-            $table->bigIncrements('marksdisseminationsID');
+            $table->bigIncrements('marksDisseminationID');
             $table->integer('marksObtained');
 
                #foreign key section
                $table->unsignedBigInteger('studentID');
                $table->unsignedBigInteger('assessmentID');
-              
-   
+
+
             //    $table->foreign('student_ID')->references('studentID')->on('employee')->onDelete('cascade');
             //    $table->foreign('marksDistribution_ID')->references('marksDistributionID')->on('marksdistribution')->onDelete('cascade');
 

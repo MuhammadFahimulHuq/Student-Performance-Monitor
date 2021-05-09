@@ -14,8 +14,10 @@ class CreateDeanTable extends Migration
     public function up()
     {
         Schema::create('deans', function (Blueprint $table) {
+            $table->id('DFemployeeID');
             $table->date('startDate');
             $table->date('endDate');
+            $table->unsignedBigInteger('managingSchool');
         });
     }
 

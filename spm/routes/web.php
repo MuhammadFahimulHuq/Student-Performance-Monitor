@@ -31,15 +31,21 @@ Route::POST('/', [Login::class, 'validation'])->name('validationLogin');
 Route::get('/dashboard', [Login::class, 'index'])->name('dashboard');
 
 
-Route::get('/studentD', [Student_D::class, 'index']);
+Route::get('/studentD/{id}/d', [Student_D::class, 'index']);
 Route::get('/overallReport/{id}/d', [Student_D::class, 'oR']);
+Route::get('/overallReport', [Student_D::class, 'showOR']);
+Route::get('/student', [Student_D::class, 'showH']);
 
-Route::get('/student', function () {
-    return view('pages/student/overallReport');
+// Route::get('/edit', function () {
+//     return view('pages/student/overallReport');
+// });
+
+Route::get('/edit', function () {
+    return view('pages/faculty/studentreport');
 });
 
-Route::get('/faculty', function () {
-    return view('pages/faculty/facultydashboard');
+Route::get('/test', function () {
+    return view('pages/test');
 });
 // Auth::routes();
 

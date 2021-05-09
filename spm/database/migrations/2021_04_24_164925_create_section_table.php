@@ -16,9 +16,9 @@ class CreateSectionTable extends Migration
         Schema::create('sections', function (Blueprint $table) {
             $table->bigIncrements('sectionID');
             $table->integer('sectionNo');
-            
+
             // #foreign key section
-            $table->unsignedBigInteger('employeeID');
+            $table->unsignedBigInteger('FemployeeID');
             $table->string('courseID')->unique();
             $table->unsignedBigInteger('semesterID');
 

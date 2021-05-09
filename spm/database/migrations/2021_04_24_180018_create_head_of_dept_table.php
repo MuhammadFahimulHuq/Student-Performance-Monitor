@@ -14,8 +14,10 @@ class CreateHeadOfDeptTable extends Migration
     public function up()
     {
         Schema::create('head_of_depts', function (Blueprint $table) {
+            $table->id('HFemployeeID');
             $table->date('startDate');
             $table->date('endDate');
+            $table->string('managingDepartment');
         });
     }
 

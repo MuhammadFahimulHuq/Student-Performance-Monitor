@@ -5,7 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class section extends Model
+class Section extends Model
 {
-    use HasFactory;
+  
+    public function register()
+    {
+        return $this->hasMany(Register::class);
+    }
+    public function assessmentType()
+    {
+        return $this->hasMany(AssessmentType::class);
+    }
 }
