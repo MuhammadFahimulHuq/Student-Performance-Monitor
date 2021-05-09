@@ -14,7 +14,7 @@ class CreateDepartmentTable extends Migration
     public function up()
     {
         Schema::create('departments', function (Blueprint $table) {
-            $table->string('departmentID');
+            $table->string('departmentID')->primary();
             $table->string('departmentName');
    #foreign key section
    $table->unsignedBigInteger('schoolID');

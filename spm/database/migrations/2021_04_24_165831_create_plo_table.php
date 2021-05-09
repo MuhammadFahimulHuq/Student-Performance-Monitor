@@ -16,7 +16,7 @@ class CreatePloTable extends Migration
         Schema::create('plos', function (Blueprint $table) {
             $table->bigIncrements('ploID');
             $table->integer('ploNo');
-            $table->string('details');
+            $table->text('details');
 
 
                #foreign key section
