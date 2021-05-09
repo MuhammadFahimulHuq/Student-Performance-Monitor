@@ -24,6 +24,9 @@ class CreateStudentTable extends Migration
             $table->string('address');
             $table->date('admissionDate');
             $table->float('cgpa');
+
+            //foreign key
+            $table->string('programID');
         });
     }
 
