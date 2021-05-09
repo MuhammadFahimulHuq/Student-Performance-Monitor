@@ -1,8 +1,0 @@
-INSERT INTO 'schools'(schoolID,schoolName) 
-
-VALUES
-(' 1','Engineering, Technology & Sciences'),
-(' 2','Business & Entrepreneurship'),
-(' 3','Environment And Life Sciences'),
-(' 4','Liberal Arts & Social Sciences'),
-(' 5','Pharmacy And Public Health'),
