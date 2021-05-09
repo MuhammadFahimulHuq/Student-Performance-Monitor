@@ -14,12 +14,12 @@ class CreateProgramTable extends Migration
     public function up()
     {
         Schema::create('programs', function (Blueprint $table) {
-            $table->bigIncrements('programID');
+            $table->string('programID');
             $table->string('programName');
             $table->string('programCode');
            #foreign key section
-           $table->unsignedBigInteger('departmentID');
-         
+           $table->string('departmentID');
+
 
         //    $table->foreign('department_ID')->references('departmentID')->on('department')->onDelete('cascade');
 

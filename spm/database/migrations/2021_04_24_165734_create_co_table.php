@@ -17,11 +17,10 @@ class CreateCoTable extends Migration
             $table->bigIncrements('coID');
             $table->integer('coNo');
 
-               #foreign key section
-               $table->string('courseID');
-               $table->unsignedBigInteger('ploID');
-           
-   
+            #foreign key section
+            $table->string('courseID');
+
+
             //    $table->foreign('plo_ID')->references('ploID')->on('plo')->onDelete('cascade');
             //    $table->foreign('course_ID')->references('courseID')->on('course')->onDelete('cascade');
 

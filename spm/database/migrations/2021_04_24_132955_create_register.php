@@ -15,16 +15,16 @@ class CreateRegister extends Migration
     {
         Schema::create('registers', function (Blueprint $table) {
             $table->bigIncrements('registerID')->start_from(1000);
-            $table->integer('gradePoint');
-            
-            
+            $table->float('gradePoint');
+
+
             #foreign key section
             $table->unsignedBigInteger('studentID');
             $table->unsignedBigInteger('sectionID');
 
 
-       
-        
+
+
         });
 
     //     Schema::table('register', function(Blueprint $table) {

@@ -20,11 +20,11 @@ class CreatePloTable extends Migration
 
 
                #foreign key section
-               $table->unsignedBigInteger('programID');
-              
-   
+               $table->string('programID');
+
+
             //    $table->foreign('program_ID')->references('programID')->on('program')->onDelete('cascade');
-             
+
 
         });
     }
