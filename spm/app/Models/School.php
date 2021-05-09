@@ -7,5 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class School extends Model
 {
-    use HasFactory;
+
+
+    public function register()
+    {
+        return $this->hasMany(Register::class);
+    }
 }

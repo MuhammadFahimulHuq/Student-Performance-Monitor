@@ -5,7 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class co extends Model
+class Co extends Model
 {
-    use HasFactory;
+    public function assessment(){
+        return $this->hasMany(Assessment::class);
+    }
+    public function comapping()
+    {
+        return $this->belongsToMany(Comapping::class);
+    }
 }

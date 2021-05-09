@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Program extends Model
 {
-    use HasFactory;
+    public function plo(){
+        return $this->hasMany(Plo::class);
+    }
 }
