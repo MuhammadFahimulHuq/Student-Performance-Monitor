@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddforeignkeysCo extends Migration
+class AddforeginkeysDeans extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddforeignkeysCo extends Migration
      */
     public function up()
     {
-        Schema::table('cos', function (Blueprint $table) {
-            $table->foreign('courseID')->references('courseID')->on('courses')->onDelete('cascade');
+
+        Schema::table('deans', function (Blueprint $table) {
+            $table->foreign('DFemployeeID')->references('FemployeeID')->on('faculties')->onDelete('cascade');
+            $table->foreign('managingSchool')->references('schoolID')->on('schools')->onDelete('cascade');
         });
     }
 

@@ -15,11 +15,7 @@ class CreateSchoolTable extends Migration
     {
         Schema::create('schools', function (Blueprint $table) {
             $table->bigIncrements('schoolID');
-            
             $table->string('schoolName');
-            $table->integer('schoolNo');
-
-            
         });
     }
 

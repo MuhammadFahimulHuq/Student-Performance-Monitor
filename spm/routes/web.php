@@ -43,6 +43,10 @@ Route::get('/student', [Student_D::class, 'showH']);
 Route::get('/edit', function () {
     return view('pages/faculty/studentreport');
 });
+
+Route::get('/test', function () {
+    return view('pages/test');
+});
 // Auth::routes();
 
 // Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -14,7 +14,9 @@ class CreateFacultyTable extends Migration
     public function up()
     {
         Schema::create('faculties', function (Blueprint $table) {
-            $table->id('deptID');
+            #foreign key section
+            $table->id('FemployeeID');
+            $table->string('departmentID');
         });
     }
 

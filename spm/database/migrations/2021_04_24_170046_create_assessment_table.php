@@ -16,16 +16,16 @@ class CreateAssessmentTable extends Migration
         Schema::create('assessments', function (Blueprint $table) {
             $table->bigIncrements('assessmentID');
             $table->integer('marksObtainable');
-    
-            $table->string('questionNo');
+
+            $table->integer('questionNo');
 
              #foreign key section
              $table->unsignedBigInteger('coID');
                 $table->unsignedBigInteger('assessmentTypeID');
 
- 
+
             //  $table->foreign('col_ID')->references('colID')->on('co')->onDelete('cascade');
-             
+
             //  $table->foreign('semester_ID')->references('semesterID')->on('semester')->onDelete('cascade');
         });
     }

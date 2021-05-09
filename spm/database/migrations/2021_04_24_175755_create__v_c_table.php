@@ -14,8 +14,9 @@ class CreateVCTable extends Migration
     public function up()
     {
         Schema::create('vcs', function (Blueprint $table) {
-           $table->date('joiningDate');
-           $table->date('leaveDate');
+            $table->id('VemployeeID');
+            $table->date('joiningDate');
+            $table->date('leaveDate');
         });
     }
 
