@@ -1,9 +1,0 @@
-
-INSERT INTO 'COs' (coID,coNo,courseID,ploID,)
-
-VALUES
-('CO1','1','2',' CSE101+L','1'),
-('CO2','2','2',' CSE203+L','2'),
-('CO3','3','2',' CSE214','3'),
-('CO4','1','2',' CSE216+L','4'),
-('CO5','2','2',' CSE303+L','5'),

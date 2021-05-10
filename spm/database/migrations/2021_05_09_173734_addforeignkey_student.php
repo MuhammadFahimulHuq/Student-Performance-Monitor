@@ -13,7 +13,7 @@ class AddforeignkeyStudent extends Migration
      */
     public function up()
     {
-        Schema::table('programs', function (Blueprint $table) {
+        Schema::table('students', function (Blueprint $table) {
             $table->foreign('programID')->references('programID')->on('programs')->onDelete('cascade');
         });
     }
