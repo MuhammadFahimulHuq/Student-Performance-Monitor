@@ -63,7 +63,7 @@
                             {{-- @if(!empty($users->user_id))
                                 {{return route('login')}}
                             @endif --}}
-                                {{-- <h4>{{$user->username}}</h4><h5> {{$user->userType}}</h5> --}}
+                                <h4>{{$username}}</h4><h5> {{$userType}}</h5>
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">

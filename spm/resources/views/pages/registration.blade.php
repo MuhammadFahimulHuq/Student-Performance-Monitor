@@ -24,15 +24,15 @@
         </div>
     </header>
     <div class="box2">
-        <form action="{{ route('validationReg') }}" id="box-id-2" method="POST">
+        {{-- <form action="{{ route('validationReg') }}" id="box-id-2" method="POST">
             @csrf
-            <p> </p>
+            <p> </p> --}}
             @if (session()->has('error'))
                 <div class="alert alert-danger">{{ session()->get('error') }}</div>
             @elseif (session()->has('message'))
                 <div class="alert alert-success">{{ session()->get('message') }}</div>
             @endif
-            <img class="img-fix" src="img/Sample_User_Icon.png">
+            {{-- <img class="img-fix" src="img/Sample_User_Icon.png">
             <input class="EEN" type="text" placeholder="Usernmae" name="username" required><br><br>
             @error('username')
                 <h1>{{ $message }}</h1>
@@ -54,12 +54,14 @@
             <input class="EEN" type="password" placeholder="Auth-Code" name="AuthCode" required><br><br>
             @error('password')
                 <h1>{{ $message }}</h1>
-            @enderror
-
-            <span class="AB">
+            @enderror --}}
+            {{-- <span class="AB">
                 <input id="BTN1" class="BTTN" type="submit" value="Registration">
-            </span>
-        </form><br>
+            </span> --}}
+        {{-- </form><br> --}}
+        <a href="{{route('login')}}">
+        <button class="btn btn-primary">Login</button>
+        </a>
         {{-- <form action="{{ route('populate') }}" id="box-id-2" method="POST">
             @csrf
             <span class="AB">

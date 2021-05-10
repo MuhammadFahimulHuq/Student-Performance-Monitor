@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Student;
 
 class Login extends Controller
 {
@@ -24,8 +25,10 @@ class Login extends Controller
         if ($isUser) {
             $users = DB::select('SELECT * FROM users WHERE username ="' . $data->input('username') . '" AND password ="' . $data->input('password') . '"');
             foreach ($users as $user) {
-                if ($user->userType == 'admin')
-                    return app('App\Http\Controllers\Student_D')->index($user->user_id);
+                if ($user->userType == 'student') {
+                    $student = Student::where('studentID', $user->username)->first();
+                    return app('App\Http\Controllers\Student_D')->index($student->studentID);
+                }
                 if ($user->userType == 'faculty')
                     return app('App\Http\Controllers\Faculty_D')->index($user->user_id);
                 if ($user->userType == 'higherOfficial')
