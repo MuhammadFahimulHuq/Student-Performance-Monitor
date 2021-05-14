@@ -103,7 +103,7 @@ DB::statement("INSERT INTO `programs` (programID,programCode,programName,departm
 ('MIC','B.Sc','Microbiology','DLS'),
 ('BAB','B.Sc','Biochemistry and Biotechnology','DLS'),
 ('PHA','Bpham','Bachelor of Pharmacy ','PHA');");
-DB::statement("INSERT INTO `employees`(employeeId, firstname,lastname,gender,dateOfBirth,email,phone,address) VALUES    
+DB::statement("INSERT INTO `employees`(employeeId, firstname,lastname,gender,dateOfBirth,email,phone,address) VALUES
 (1,'Abu','Golam','male','1967-01-01','golamabu12@gmail.com',1912006782,'bashundharaR-A dhaka-1229'),
 (2,'Md','Salek','male','1968-01-01','mdsalek@yahoo.com',1711250672,'mogbazar dhaka-1217'),
 (3,'Abdul','Kazi','male','1967-09-01','kazi34@gmail.com',1812078672,'bashundharaR-A dhaka-1229'),
@@ -187,7 +187,7 @@ DB::statement("INSERT INTO `head_of_depts` (HFemployeeID,startDate,endDate,manag
 ('21','2018-01-23','2021-01-01','CSE'),
 ('17','2018-01-23','2021-01-01','EEE'),
 ('16','2016-01-23','2018-01-01','EEE');");
-DB::statement("INSERT INTO `students` (studentID,firstname,lastname,gender,dateOfBirth,email,phone,address,admissionDate,programId,cgpa) VALUES    
+DB::statement("INSERT INTO `students` (studentID,firstname,lastname,gender,dateOfBirth,email,phone,address,admissionDate,programId,cgpa) VALUES
 (1622098,'Eric','Gomes','male','1997-01-01','eric12@gmail.com',1912567823,'84-A bashundharaR-A dhaka-1229','2016-01-15','CSE',0),
 (1827066,'Barna','Nath','female','1997-02-07','barnanath@yahoo.com',1714395732,'23-D mohammadpur dhaka-1225','2018-04-15','CSE',0),
 (1827067,'Noyon','Chowdhury','male','1996-07-25','chowdhurynoyon@gmail.com',1814276894,'8-A dhanmondi dhaka-1209','2018-04-15','CSE',0),
@@ -319,7 +319,7 @@ DB::statement("INSERT INTO `courses` (courseID,courseName,noOfCredit,programID) 
 ('CSE313','Compiler Construction','3','CSE'),
 ('CSE316+L','Data Communication & Computer Networks','4','CSE'),
 ('CSE317+L','Numerical Methods','4','CSE');");
-DB::statement("INSERT INTO `sections` (sectionID,sectionNo,semesterID,courseID,FemployeeID) VALUES 
+DB::statement("INSERT INTO `sections` (sectionID,sectionNo,semesterID,courseID,FemployeeID) VALUES
 (1,1,12,'CSE203+L',35),
 (2,2,12,'CSE203+L',35),
 (3,3,12,'CSE203+L',18),
@@ -886,11 +886,11 @@ DB::statement("INSERT INTO `plos` (ploID,ploNo,programID,details) VALUES
 ('4','1','CSE','Design: An ability to design computer based systems, components, or processes to meet the desire requirement'),
 ('5','2','CSE','Problem Solving: An ability to apply mathematical foundations, simulation, algorithmic principles, and computer science theory in the modeling and design of computer-based systems in a way that demonstrates comprehension of the tradeoffs involved in design choices.'),
 ('6','3','CSE','Implementation: An ability to apply design and development principles in the construction of software systems of varying complexity'),
-('7','1','CSE','Experiment and Analysis: An ability to conduct standard tests and measurements;"); to conduct, analyze, and interpret experiments;"); and to apply experimental results to improve solutions.'),
+('7','1','CSE','Experiment and Analysis: An ability to conduct standard tests and measurements to conduct, analyze, and interpret experiments and to apply experimental results to improve solutions.'),
 ('8','2','CSE','Community engagement and Engineering: An ability to appreciate human behavior, culture, interaction and organization through studies in the humanities and social sciences. A knowledge of the impact of computing solutions in a local and global context'),
 ('9','3','CSE','Teamwork: An ability to function effectively as a member or leader of a technical team to accomplish common goals'),
-('10','1','CSE','Communication: An ability to apply written and oral communication in both technical and non technical environments;"); an ability to communicate with a range of audience;"); and an ability to identify and use appropriate available technical literature'),
-('11','2','CSE','Self-directed: Recognition of the need for and an ability to engage in self-directed continuing professional development;"); be prepared to enter a top-ranked graduate program in Computer Science and Engineering.'),
+('10','1','CSE','Communication: An ability to apply written and oral communication in both technical and non technical environments an ability to communicate with a range of audience and an ability to identify and use appropriate available technical literature'),
+('11','2','CSE','Self-directed: Recognition of the need for and an ability to engage in self-directed continuing professional development be prepared to enter a top-ranked graduate program in Computer Science and Engineering.'),
 ('12','3','CSE','Ethics: An understanding of and a commitment to address professional, ethical, legal, security, social issues and responsibilities including a respect for diversity'),
 ('13','1','CSE','Process Management: A commitment to quality, timeliness, and continuous improvement.');");
 DB::statement("INSERT INTO `cos` (coID,coNo,courseID) VALUES
@@ -1896,7 +1896,7 @@ DB::statement("INSERT INTO `assessments` (assessmentID,assessmentTypeID,coID,que
 (493,133,30,3,15),
 (494,133,31,4,50),
 (495,134,32,1,30);");
-DB::statement("INSERT INTO `markDisseminations` (markDisseminationID,studentID,assessmentID,marksObtained) VALUES
+DB::statement("INSERT INTO `marksDisseminations` (marksDisseminationID,studentID,assessmentID,marksObtained) VALUES
 (1,1622098,1,16),
 (2,1622098,2,10),
 (3,1622098,3,8),
@@ -2996,7 +2996,7 @@ DB::statement("INSERT INTO `markDisseminations` (markDisseminationID,studentID,a
 (1097,1627896,217,12),
 (1098,1627896,218,0),
 (1099,1627896,219,26),
-(1100,1627896,220,NULL),
+(1100,1627896,220,0),
 (1101,1658042,210,10),
 (1102,1658042,211,0),
 (1103,1658042,212,10),
@@ -3007,7 +3007,7 @@ DB::statement("INSERT INTO `markDisseminations` (markDisseminationID,studentID,a
 (1108,1658042,217,13),
 (1109,1658042,218,10),
 (1110,1658042,219,26),
-(1111,1658042,220,NULL),
+(1111,1658042,220,0),
 (1112,1726380,221,11),
 (1113,1726380,222,23),
 (1114,1726380,223,22),
@@ -4400,6 +4400,12 @@ SELECT s.studentID,c.coID,(SUM(marksObtained)/SUM(marksObtainable))*100 co_perce
 from students s, marksDisseminations m, assessments a,cos c
 WHERE s.studentID=m.studentID AND a.assessmentID=m.assessmentID AND a.coID=c.coID
 GROUP by s.studentID,c.coID;");
-        return redirect()->back()->with('message', 'Database Populated');
+
+DB::statement("CREATE VIEW course_plo_percentage AS
+SELECT studentID,courseID,p.ploID,AVG(co_percentage) sucess
+FROM view_student_co vt, cos c, comappings cm, plos p
+WHERE vt.coID=c.coID AND cm.ploID=p.ploID and c.coID=cm.coID
+GROUP BY studentID,c.courseID,p.ploID;");
+return redirect()->back()->with('message', 'Database Populated');
     }
 }

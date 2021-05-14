@@ -13,14 +13,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="{{asset('styles/core.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{asset('styles/icon-font.min.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/core.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/icon-font.min.css') }}">
     {{-- <link rel="stylesheet" type="text/css" href="src/plugins/datatables/css/dataTables.bootstrap4.min.css"> --}}
     {{-- <link rel="stylesheet" type="text/css" href="src/plugins/datatables/css/responsive.bootstrap4.min.css"> --}}
-    <link rel="stylesheet" type="text/css" href="{{asset('styles/style.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('styles/style.css') }}">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-119386393-1"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
 
@@ -30,6 +32,10 @@
         gtag('js', new Date());
 
         gtag('config', 'UA-119386393-1');
+
+    </script>
+    <script>
+        @yield('chart')
 
     </script>
 </head>
@@ -60,14 +66,15 @@
                             <img src="#" alt="">
                         </span>
                         <span class="user-name">
-                            {{-- @if(!empty($users->user_id))
+                            {{-- @if (!empty($users->user_id))
                                 {{return route('login')}}
                             @endif --}}
-                                <h4>{{$username}}</h4><h5> {{$userType}}</h5>
+                            <h4>{{ $username }}</h4>
+                            <h5> {{ $userType }}</h5>
                         </span>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                        <a class="dropdown-item" href="{{route('login')}}"><i class="dw dw-logout"></i> Log Out</a>
+                        <a class="dropdown-item" href="{{ route('login') }}"><i class="dw dw-logout"></i> Log Out</a>
                     </div>
                 </div>
             </div>
@@ -165,7 +172,7 @@
     </div>
     <div class="left-side-bar">
         <div class="brand-logo">
-            <a href="{{"/"}}">
+            <a href="{{ '/' }}">
                 IUB
             </a>
             <div class="close-sidebar" data-toggle="left-sidebar-close">
@@ -184,23 +191,23 @@
     <div class="main-container">
         <div class="pd-ltr-20">
 
-                    @yield('content')
-                    <div class="footer-wrap pd-20 mb-20 card-box">
-                        Student Performance Monitor
-                    </div>
-                </div>
+            @yield('content')
+            <div class="footer-wrap pd-20 mb-20 card-box">
+                Student Performance Monitor
             </div>
-            <!-- js -->
-	<script src="{{asset('/scripts/core.js')}}"></script>
-	<script src="{{asset('/scripts/script.min.js')}}"></script>
-	<script src="{{asset('/scripts/process.js')}}"></script>
-	<script src="{{asset('/scripts/layout-settings.js')}}"></script>
-	{{-- <!-- <script src="src/plugins/apexcharts/apexcharts.min.js"></script> --> --}}
-	{{-- <!-- <script src="src/plugins/datatables/js/jquery.dataTables.min.js"></script> --> --}}
-	{{-- <script src="src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script> --}}
-	{{-- <script src="src/plugins/datatables/js/dataTables.responsive.min.js"></script> --}}
-	{{-- <script src="src/plugins/datatables/js/responsive.bootstrap4.min.js"></script> --}}
-	<script src="{{asset('/scripts/dashboard.js')}}"></script>
+        </div>
+    </div>
+    <!-- js -->
+    <script src="{{ asset('/scripts/core.js') }}"></script>
+    <script src="{{ asset('/scripts/script.min.js') }}"></script>
+    <script src="{{ asset('/scripts/process.js') }}"></script>
+    <script src="{{ asset('/scripts/layout-settings.js') }}"></script>
+    {{-- <!-- <script src="src/plugins/apexcharts/apexcharts.min.js"></script> --> --}}
+    {{-- <!-- <script src="src/plugins/datatables/js/jquery.dataTables.min.js"></script> --> --}}
+    {{-- <script src="src/plugins/datatables/js/dataTables.bootstrap4.min.js"></script> --}}
+    {{-- <script src="src/plugins/datatables/js/dataTables.responsive.min.js"></script> --}}
+    {{-- <script src="src/plugins/datatables/js/responsive.bootstrap4.min.js"></script> --}}
+    <script src="{{ asset('/scripts/dashboard.js') }}"></script>
 </body>
 
 </html>

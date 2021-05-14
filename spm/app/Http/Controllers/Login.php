@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,7 +20,6 @@ class Login extends Controller
             'username' => 'required|max:250',
             'password' => 'required',
         ]);
-        // $user = User::select("*")->where('username', $data->input('username'))->where('password', $data->input('password'))->get();
         $isUser = User::select("*")->where('username', $data->input('username'))->where('password', $data->input('password'))->exists();
 
         if ($isUser) {
@@ -29,8 +29,10 @@ class Login extends Controller
                     $student = Student::where('studentID', $user->username)->first();
                     return app('App\Http\Controllers\Student_D')->index($student->studentID);
                 }
-                if ($user->userType == 'faculty')
-                    return app('App\Http\Controllers\Faculty_D')->index($user->user_id);
+                if ($user->userType == 'faculty') {
+                    $faculty = Employee::where('employeeID', $user->username)->first();
+                    return app('App\Http\Controllers\Faculty_D')->index($faculty->employeeID);
+                }
                 if ($user->userType == 'higherOfficial')
                     return app('App\Http\Controllers\HigerO_D')->index($user->user_id);
             }
