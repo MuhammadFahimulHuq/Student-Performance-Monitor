@@ -26,12 +26,15 @@ class Student_D extends Controller
     public function showOR()
     {
         $student = Session::get('student');
-        $plos = DB::table('view_student_plo')
+        $plos = DB::table('plos')
+            ->join('programs', 'programs.programID', '=', 'plos.programID')
+            ->join('students', 'students.programID', '=', 'plos.programID')
             ->select('ploID')
             ->where('studentID', $student->studentID)
+            ->where('programs.programID', $student->programID)
             ->get();
         $success = DB::table('course_plo_percentage')
-            ->select('courseID', 'success')
+            ->select('courseID', 'ploID', 'success')
             ->where('studentID', $student->studentID)
             ->get();
         $courses = DB::table('course_plo_percentage')
@@ -60,6 +63,7 @@ class Student_D extends Controller
             ->get();
         $p2 = DB::table('course_plo_percentage')
             ->where('studentID', $student->studentID)
+            ->join('plos', 'plos.ploID', '=', 'course_plo_percentage.ploID')
             ->get();
         $arr = array();
         return view('pages/student/overallReport')->with(
@@ -94,6 +98,13 @@ class Student_D extends Controller
             ->where('students.programID', $student->programID)
             ->limit(1)
             ->first();
+
+        $pth = DB::table('programs')
+            ->join('students', 'students.programID', '=', 'programs.programID')
+            ->select('programs.programID')
+            ->where('students.programID', $student->programID)
+            ->limit(1)
+            ->first();
         $dptplo = DB::table('view_student_plo')
             ->join('plos', 'view_student_plo.ploID', '=', 'plos.ploID')
             ->join('programs', 'plos.programID', '=', 'programs.programID')
@@ -104,13 +115,25 @@ class Student_D extends Controller
             ->where('programs.departmentID', $dpth->departmentID)
             ->groupBy('plos.ploID')
             ->get();
+        $ptplo = DB::table('view_student_plo')
+            ->join('plos', 'view_student_plo.ploID', '=', 'plos.ploID')
+            ->join('programs', 'plos.programID', '=', 'programs.programID')
+            ->select(
+                DB::raw('plos.ploID as ploNo'),
+                DB::raw('AVG(view_student_plo.plo_percentage) as success')
+            )
+            ->where('programs.programID', $pth->programID)
+            ->groupBy('plos.ploID')
+            ->get();
+        $arrp = array();
         $arrs = array();
         $arrd = array();
         foreach ($stdplo as $s)
             array_push($arrs, [$s->ploNo, (float)$s->success]);
         foreach ($dptplo as $s)
             array_push($arrd, [$s->ploNo, (float)$s->success]);
-
+        foreach ($ptplo as $s)
+            array_push($arrp, [$s->ploNo, (float)$s->success]);
         $Lowest = DB::table('view_student_plo')->where('studentID', $student->studentID)->where('plo_percentage', $cards->min('plo_percentage'))->first();
         return view('pages/student/studentdashboard')->with(
             [
@@ -120,7 +143,8 @@ class Student_D extends Controller
                 'cards' => $cards,
                 'lowest' => $Lowest,
                 'stdplo' => json_encode($arrs),
-                'dptplo' => json_encode($arrd)
+                'dptplo' => json_encode($arrd),
+                'ptplo' => json_encode($arrp)
             ]
         );
     }

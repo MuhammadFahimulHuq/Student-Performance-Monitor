@@ -43,6 +43,11 @@ Route::get('/overallReport', [Student_D::class, 'showOR']);
 // Faculty
 Route::get('/facultyD/{id}/d', [Faculty_D::class, 'index']);
 Route::get('/faculty', [Faculty_D::class, 'showH']);
+Route::get('/studentReport/{id}/d', [Faculty_D::class, 'sR']);
+Route::get('/studentReport', [Faculty_D::class, 'showsR']);
+Route::get('/courseReport/{id}/d', [Faculty_D::class, 'cR']);
+Route::get('/courseReport', [Faculty_D::class, 'showcR']);
+
 
 
 

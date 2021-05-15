@@ -36,6 +36,25 @@
     legend: {position: 'none'}
     };
 
+    var ptplo = new google.visualization.DataTable();
+    ptplo.addColumn('number', 'PLO');
+    ptplo.addColumn('number', 'Success');
+    ptplo.addRows(<?php echo $ptplo; ?>);
+
+    var ptploO = {
+    title: 'Program Wise PLO',
+    hAxis: {
+    title: 'PLO No`',
+    },
+    vAxis: {
+        title: 'Success',
+    },
+    legend: {position: 'none'}
+    };
+    var chart = new google.visualization.ColumnChart(
+    document.getElementById('chart_div3'));
+    chart.draw(ptplo, ptploO);
+
     var chart = new google.visualization.ColumnChart(
     document.getElementById('chart_div1'));
     chart.draw(stdplo, stdploO);
@@ -107,6 +126,13 @@
             <div class="card-box height-100-p pd-20">
                 <div id="chart_div2"></div>
 
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-12 mb-30">
+            <div class="card-box height-100-p pd-20">
+                <div id="chart_div3"></div>
             </div>
         </div>
     </div>

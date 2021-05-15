@@ -883,16 +883,16 @@ DB::statement("INSERT INTO `plos` (ploID,ploNo,programID,details) VALUES
 ('1','1','CSE','Knowledge: An ability to select and apply the knowledge, techniques, skills, and modern tools of the computer science and engineering discipline'),
 ('2','2','CSE','Requirement Analysis: An ability to identify, analyze, and solve a problem by defining the computing requirements of the problem through effectively gathering of the actual requirements'),
 ('3','3','CSE','Problem Analysis: An ability to select and apply the knowledge of mathematics, science, engineering, and technology to computing problems that require the application of principles and applied procedures or methodologies'),
-('4','1','CSE','Design: An ability to design computer based systems, components, or processes to meet the desire requirement'),
-('5','2','CSE','Problem Solving: An ability to apply mathematical foundations, simulation, algorithmic principles, and computer science theory in the modeling and design of computer-based systems in a way that demonstrates comprehension of the tradeoffs involved in design choices.'),
-('6','3','CSE','Implementation: An ability to apply design and development principles in the construction of software systems of varying complexity'),
-('7','1','CSE','Experiment and Analysis: An ability to conduct standard tests and measurements to conduct, analyze, and interpret experiments and to apply experimental results to improve solutions.'),
-('8','2','CSE','Community engagement and Engineering: An ability to appreciate human behavior, culture, interaction and organization through studies in the humanities and social sciences. A knowledge of the impact of computing solutions in a local and global context'),
-('9','3','CSE','Teamwork: An ability to function effectively as a member or leader of a technical team to accomplish common goals'),
-('10','1','CSE','Communication: An ability to apply written and oral communication in both technical and non technical environments an ability to communicate with a range of audience and an ability to identify and use appropriate available technical literature'),
-('11','2','CSE','Self-directed: Recognition of the need for and an ability to engage in self-directed continuing professional development be prepared to enter a top-ranked graduate program in Computer Science and Engineering.'),
-('12','3','CSE','Ethics: An understanding of and a commitment to address professional, ethical, legal, security, social issues and responsibilities including a respect for diversity'),
-('13','1','CSE','Process Management: A commitment to quality, timeliness, and continuous improvement.');");
+('4','4','CSE','Design: An ability to design computer based systems, components, or processes to meet the desire requirement'),
+('5','5','CSE','Problem Solving: An ability to apply mathematical foundations, simulation, algorithmic principles, and computer science theory in the modeling and design of computer-based systems in a way that demonstrates comprehension of the tradeoffs involved in design choices.'),
+('6','6','CSE','Implementation: An ability to apply design and development principles in the construction of software systems of varying complexity'),
+('7','7','CSE','Experiment and Analysis: An ability to conduct standard tests and measurements to conduct, analyze, and interpret experiments and to apply experimental results to improve solutions.'),
+('8','8','CSE','Community engagement and Engineering: An ability to appreciate human behavior, culture, interaction and organization through studies in the humanities and social sciences. A knowledge of the impact of computing solutions in a local and global context'),
+('9','9','CSE','Teamwork: An ability to function effectively as a member or leader of a technical team to accomplish common goals'),
+('10','10','CSE','Communication: An ability to apply written and oral communication in both technical and non technical environments an ability to communicate with a range of audience and an ability to identify and use appropriate available technical literature'),
+('11','11','CSE','Self-directed: Recognition of the need for and an ability to engage in self-directed continuing professional development be prepared to enter a top-ranked graduate program in Computer Science and Engineering.'),
+('12','12','CSE','Ethics: An understanding of and a commitment to address professional, ethical, legal, security, social issues and responsibilities including a respect for diversity'),
+('13','13','CSE','Process Management: A commitment to quality, timeliness, and continuous improvement.');");
 DB::statement("INSERT INTO `cos` (coID,coNo,courseID) VALUES
 (1,1,'CSE201'),
 (2,2,'CSE201'),
@@ -4389,23 +4389,35 @@ DB::statement("INSERT INTO `marksDisseminations` (marksDisseminationID,studentID
 (2490,1614142,494,16),
 (2491,1614142,495,0);");
 
-DB::statement("CREATE VIEW view_student_plo AS
+DB::statement("CREATE VIEW IF NOT EXISTS view_student_plo AS
 SELECT s.studentID,p.ploID,(SUM(marksObtained)/SUM(marksObtainable))*100 plo_percentage
 from students s, marksDisseminations m, assessments a,cos c,comappings cm,plos p
 WHERE s.studentID=m.studentID AND a.assessmentID=m.assessmentID AND a.coID=c.coID AND p.ploID=cm.ploID AND c.coID = cm.coID GROUP by s.studentID,p.ploID
 ;");
-
-DB::statement(" CREATE VIEW view_student_co AS
+DB::statement(" CREATE VIEW IF NOT EXISTS view_student_co AS
 SELECT s.studentID,c.coID,(SUM(marksObtained)/SUM(marksObtainable))*100 co_percentage
 from students s, marksDisseminations m, assessments a,cos c
 WHERE s.studentID=m.studentID AND a.assessmentID=m.assessmentID AND a.coID=c.coID
 GROUP by s.studentID,c.coID;");
-
-DB::statement("CREATE VIEW course_plo_percentage AS
+DB::statement("CREATE VIEW IF NOT EXISTS course_plo_percentage AS
 SELECT studentID,courseID,p.ploID,AVG(co_percentage) sucess
 FROM view_student_co vt, cos c, comappings cm, plos p
 WHERE vt.coID=c.coID AND cm.ploID=p.ploID and c.coID=cm.coID
 GROUP BY studentID,c.courseID,p.ploID;");
+DB::statement("CREATE VIEW IF NOT EXISTS faculty_plo AS
+SELECT s.studentID,FemployeeID,c.courseID,st.sectionID,p.ploID,(SUM(marksObtained)/SUM(marksObtainable))*100 co_percentage
+from students s, marksDisseminations m, assessments a,cos c,comappings cm,plos p,assessmentTypes ta,sections st
+WHERE s.studentID=m.studentID AND a.assessmentID=m.assessmentID AND a.coID=c.coID AND ta.assessmentTypeID=a.assessmentTypeID
+AND st.sectionID=ta.sectionID AND p.ploID=cm.ploID AND c.coID = cm.coID
+GROUP by FemployeeID,s.studentID,c.courseID,st.sectionID,p.ploID;");
+
+DB::statement("CREATE VIEW IF NOT EXISTS faculty_co AS
+SELECT s.studentID,FemployeeID,c.courseID,st.sectionID,c.coID,(SUM(marksObtained)/SUM(marksObtainable))*100 co_percentage
+from students s, marksDisseminations m, assessments a,cos c,comappings cm,plos p,assessmentTypes ta,sections st
+WHERE s.studentID=m.studentID AND a.assessmentID=m.assessmentID AND a.coID=c.coID AND ta.assessmentTypeID=a.assessmentTypeID
+AND st.sectionID=ta.sectionID AND p.ploID=cm.ploID AND c.coID = cm.coID
+GROUP by FemployeeID,s.studentID,c.courseID,st.sectionID,c.coID;");
+
 return redirect()->back()->with('message', 'Database Populated');
     }
 }

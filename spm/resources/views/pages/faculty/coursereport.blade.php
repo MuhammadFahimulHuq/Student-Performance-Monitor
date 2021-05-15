@@ -2,27 +2,25 @@
 
 @section('sidebar')
     <li class="dropdown">
-        {{-- <a href="{{'/facultyD/'.$user->femployeeID.'/d'}}" class="dropdown-toggle"> --}}
-        <a href="#" class="dropdown-toggle">
+        <a href="{{ '/facultyD/' . $faculty->employeeID . '/d' }}" class="dropdown-toggle">
             <span class="micon dw dw-house-1"></span><span class="mtext">Home</a></span>
         </a>
     </li>
     <li class="dropdown">
-        <a href="#" class="dropdown-toggle">
+        <a href="{{ '/dataEntry/' . $faculty->employeeID . '/d' }}" class="dropdown-toggle">
             <span class="micon dw dw-edit2"></span><span class="mtext">Data Entry</span>
         </a>
     </li>
     <li class="dropdown">
-        <a href="#" class="dropdown-toggle">
+        <a href="{{ '/studentReport/' . $faculty->employeeID . '/d' }}" class="dropdown-toggle">
             <span class="micon dw dw-list3"></span><span class="mtext">Student Report</span>
         </a>
     </li>
     <li class="dropdown">
-        <a href="#" class="dropdown-toggle">
+        <a href="{{ '/courseReport/' . $faculty->employeeID . '/d' }}" class="dropdown-toggle">
             <span class="micon dw dw-invoice"></span><span class="mtext">Course Report</span>
         </a>
     </li>
-
 @endsection
 
 @section('content')

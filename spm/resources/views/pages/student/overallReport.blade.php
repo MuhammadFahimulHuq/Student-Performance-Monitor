@@ -35,7 +35,7 @@ $(document).ready(function() {
     <?php unset($arr);$arr=array();
     foreach($p2 as $p){
         if($p->courseID==$c->courseID)
-            array_push($arr,[$p->ploID,ceil($p->success)]);}?>;
+            array_push($arr,[$p->ploNo,ceil($p->success)]);}?>;
 
     var plo = new google.visualization.DataTable();
     plo.addColumn('number', 'ploNo');
@@ -45,7 +45,7 @@ $(document).ready(function() {
     var plo_options = {
         title: '{{$c->courseID}} PLO Achievement',
         hAxis: {
-            title: 'PLO',
+            title: 'PLO No',
         },
         vAxis: {
             title: 'Success',
@@ -84,7 +84,7 @@ $(document).ready(function() {
                     <tr>
                         <th>Course</th>
                         @foreach ($plos as $p)
-                            <th>ploNo{{ $p->ploID }}</th>
+                            <th>plo{{ $p->ploID }}</th>
                         @endforeach
                     </tr>
                     @foreach ($courses as $c)
