@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use App\Models\Employee;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
@@ -30,17 +32,110 @@ class Faculty_D extends Controller
     public function showcR()
     {
         $faculty = Session::get('faculty');
+        $cID = NULL;
+        $c1 = NULL;
+        $c2 = NULL;
+        $c3 = NULL;
+        $c4 = NULL;
+        $arr = array();
+        if (!empty(Session::get('cID'))) {
+
+            $cID = Session::get('cID');
+            if (DB::table('faculty_co')
+                ->select('faculty_co.courseID', 'coNo', DB::raw('AVG(co_percentage) as success'))
+                ->join('cos', 'cos.coID', '=', 'faculty_co.coID')
+                ->where('faculty_co.courseID', $cID)
+                ->where('faculty_co.FemployeeID', $faculty->employeeID)
+                ->groupBy('faculty_co.courseID', 'faculty_co.coID', 'coNo')
+                ->exists()
+            ) {
+                $c1 = DB::table('faculty_co')
+                    ->select('faculty_co.courseID', 'coNo', DB::raw('AVG(co_percentage) as success'))
+                    ->join('cos', 'cos.coID', '=', 'faculty_co.coID')
+                    ->where('faculty_co.courseID', $cID)
+                    ->where('faculty_co.FemployeeID', $faculty->employeeID)
+                    ->groupBy('faculty_co.courseID', 'faculty_co.coID', 'coNo')
+                    ->get();
+            }
+            $c2 = DB::table('faculty_co')
+                ->select('faculty_co.courseID', 'coNo', DB::raw('AVG(co_percentage) as success'))
+                ->join('cos', 'cos.coID', '=', 'faculty_co.coID')
+                ->where('faculty_co.courseID', $cID)
+                ->groupBy('faculty_co.courseID', 'faculty_co.coID', 'coNo')
+                ->get();
+            if (DB::table('faculty_plo')
+                ->select('faculty_plo.courseID', 'ploNo', DB::raw('AVG(co_percentage) as success'))
+                ->join('plos', 'plos.ploID', '=', 'faculty_plo.ploID')
+                ->where('faculty_plo.courseID', $cID)
+                ->where('FemployeeID', $faculty->employeeID)
+                ->groupBy('faculty_plo.courseID', 'faculty_plo.ploID', 'ploNo')
+                ->exists()
+            ) {
+                $c3 = DB::table('faculty_plo')
+                    ->select('faculty_plo.courseID', 'ploNo', DB::raw('AVG(co_percentage) as success'))
+                    ->join('plos', 'plos.ploID', '=', 'faculty_plo.ploID')
+                    ->where('faculty_plo.courseID', $cID)
+                    ->where('FemployeeID', $faculty->employeeID)
+                    ->groupBy('faculty_plo.courseID', 'faculty_plo.ploID', 'ploNo')
+                    ->get();
+            }
+            $c4 = DB::table('faculty_plo')
+                ->select('faculty_plo.courseID', 'ploNo', DB::raw('AVG(co_percentage) as success'))
+                ->join('plos', 'plos.ploID', '=', 'faculty_plo.ploID')
+                ->where('faculty_plo.courseID', $cID)
+                ->groupBy('faculty_plo.courseID', 'faculty_plo.ploID', 'ploNo')
+                ->get();
+        }
+        $flag = false;
         return view('pages/faculty/coursereport')->with(
             [
                 'faculty' => $faculty,
                 'username' => $faculty->firstname,
-                'userType' => 'faculty'
+                'userType' => 'faculty',
+                'c1' => $c1,
+                'c2' => $c2,
+                'c3' => $c3,
+                'c4' => $c4,
+                'arr' => $arr,
+                'cID' => $cID,
+                'flag' => $flag
             ]
         );
     }
 
+    public function hsr(Request $request, $id)
+    {
+        $faculty = Employee::where('employeeID', $id)->first();
+        $isStudent = Student::select("*")->where('studentID', $request->input('tsID'))->exists();
+        if ($isStudent) {
+            return redirect('/studentReport')->with([
+                'faculty' => $faculty,
+                'cID' => $request->input('tsID')
+            ]);
+        } else {
+            return redirect()->back()->with(['message' => 'Invalid StudentID', 'faculty' => $faculty]);
+        }
+    }
+
+    public function hcr(Request $request, $id)
+    {
+        $faculty = Employee::where('employeeID', $id)->first();
+        $isCourse = Course::select("*")->where('courseID', $request->input('tcID'))->exists();
+        if ($isCourse) {
+            return redirect('/courseReport')->with([
+                'faculty' => $faculty,
+                'cID' => $request->input('tcID')
+            ]);
+        } else {
+            return redirect()->back()->with(['message' => 'Invalid Course', 'faculty' => $faculty]);
+        }
+    }
     public function showsR()
     {
+        $cID = NULL;
+        if (!empty(Session::get('cID'))) {
+            $cID = Session::get('cID');
+        }
         $faculty = Session::get('faculty');
         return view('pages/faculty/studentreport')->with(
             [
@@ -83,17 +178,17 @@ class Faculty_D extends Controller
             ->select(DB::raw('DISTINCT ploID'))
             ->where('FemployeeID', $faculty->employeeID)
             ->get();
-        $p1=DB::table('faculty_co')
-            ->select('faculty_co.courseID','coNo',DB::raw('AVG(co_percentage) as success'))
-            ->join('cos','cos.coID','=','faculty_co.coID')
+        $p1 = DB::table('faculty_co')
+            ->select('faculty_co.courseID', 'coNo', DB::raw('AVG(co_percentage) as success'))
+            ->join('cos', 'cos.coID', '=', 'faculty_co.coID')
             ->where('FemployeeID', $faculty->employeeID)
-            ->groupBy('faculty_co.courseID','faculty_co.coID','coNo')
+            ->groupBy('faculty_co.courseID', 'faculty_co.coID', 'coNo')
             ->get();
-        $p2=DB::table('faculty_plo')
-            ->select('faculty_plo.courseID','ploNo',DB::raw('AVG(co_percentage) as success'))
-            ->join('plos','plos.ploID','=','faculty_plo.ploID')
+        $p2 = DB::table('faculty_plo')
+            ->select('faculty_plo.courseID', 'ploNo', DB::raw('AVG(co_percentage) as success'))
+            ->join('plos', 'plos.ploID', '=', 'faculty_plo.ploID')
             ->where('FemployeeID', $faculty->employeeID)
-            ->groupBy('faculty_plo.courseID','faculty_plo.ploID','ploNo')
+            ->groupBy('faculty_plo.courseID', 'faculty_plo.ploID', 'ploNo')
             ->get();
         $arr = array();
         return view('pages/faculty/facultydashboard')->with(
@@ -106,8 +201,8 @@ class Faculty_D extends Controller
                 'c3' => $card3,
                 'c4' => $card4,
                 'arr' => $arr,
-                'p1'=>$p1,
-                'p2'=>$p2
+                'p1' => $p1,
+                'p2' => $p2
             ]
         );
     }

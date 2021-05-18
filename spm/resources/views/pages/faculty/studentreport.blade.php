@@ -29,14 +29,24 @@
         <div class="col-xl-12 mb-30">
             <div class="card-box height-100-p pd-20">
                 <div class="col-xl-5 d-flex justify-content-center">
-                    <form class="d-flex">
-                        <input class="form-control me-2" type="search" placeholder="CourseID" aria-label="Search">
+                    <form action="{{'/hsr/'.$faculty->employeeID.'/d'}}" method="POST" class="d-flex">
+                        @csrf
+                        <input name="tsID" class="form-control me-2" type="text" required placeholder="Student ID" aria-label="Search" id="tsID">
                         <button class="btn btn-outline-success" type="submit">Show</button>
                     </form>
                 </div>
-                <!-- <h2 class="h4 mb-20">Activity</h2> -->
-                <!-- <div id="chart5"></div> -->
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-xl-12 mb-30">
+            <div class="card-box height-100-p pd-20">
+            @if (session()->has('message'))
+                <div class="alert alert-danger">{{ session()->get('message') }}</div>
+            @endif
+
+            </div>
+        </div>
+    </div>
+
 @endsection
