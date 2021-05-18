@@ -66,6 +66,7 @@ class Student_D extends Controller
             ->join('plos', 'plos.ploID', '=', 'course_plo_percentage.ploID')
             ->get();
         $arr = array();
+        $i=null;
         return view('pages/student/overallReport')->with(
             [
                 'student' => $student,
@@ -73,10 +74,12 @@ class Student_D extends Controller
                 'userType' => 'student',
                 'courses' => $courses,
                 'plos' => $plos,
+                'tplo' => $plos->count()*$courses->count(),
                 'success' => $success,
                 'p1' => $p1,
                 'p2' => $p2,
-                'arr' => $arr
+                'arr' => $arr,
+                'i'=>$i
             ]
         );
     }

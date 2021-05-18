@@ -47,6 +47,18 @@ Route::get('/studentReport/{id}/d', [Faculty_D::class, 'sR']);
 Route::get('/studentReport', [Faculty_D::class, 'showsR']);
 Route::get('/courseReport/{id}/d', [Faculty_D::class, 'cR']);
 Route::get('/courseReport', [Faculty_D::class, 'showcR']);
+Route::POST('/hsr/{id}/d', [Faculty_D::class, 'hsr'])->name('hsr');
+Route::POST('/hcr/{id}/d', [Faculty_D::class, 'hcr'])->name('hcr');
+
+//higerOfficial
+Route::get('/HigherO/{id}/d', [HigerO_D::class, 'index']);
+Route::get('/HigherO', [HigerO_D::class, 'showH']);
+Route::get('/studentReportO/{id}/d', [HigerO_D::class, 'sR']);
+Route::get('/studentReportO', [HigerO_D::class, 'showsR']);
+Route::get('/courseReportO/{id}/d', [HigerO_D::class, 'cR']);
+Route::get('/courseReportO', [HigerO_D::class, 'showcR']);
+Route::POST('/hsrO/{id}/d', [HigerO_D::class, 'hsr'])->name('hsr');
+Route::POST('/hcrO/{id}/d', [HigerO_D::class, 'hcr'])->name('hcr');
 
 
 

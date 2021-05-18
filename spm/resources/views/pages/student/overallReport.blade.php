@@ -88,13 +88,26 @@ $(document).ready(function() {
                         @endforeach
                     </tr>
                     @foreach ($courses as $c)
+                    <?php $i=1 ?>
                         <tr>
                             <th>{{ $c->courseID }}</th>
+                            {{-- FIX --}}
                             @foreach ($success as $s)
-                                @if ($c->courseID == $s->courseID)
-                                {{-- //FIX:: --}}
-                                    <th>{{ empty($s->success) ? : ceil($s->success) }}</th>
+                            {{$i}}
+                                {{-- @if($c->courseID != $s->courseID) @continue @endif --}}
+                                @if ($c->courseID == $s->courseID && $s->ploID!=$i)
+                                    <th>{{ceil($s->success) }}</th>
+                                    <?php $i+=1; ?>
+                                @else
+                                    {{-- @while(true) --}}
+                                        <?php $i++; ?>
+                                        {{-- {{$i}}--{{$s->ploID}} --}}
+                                        {{-- @if($i>$plos->count()) @break @endif --}}
+                                        <th>N/A</th>
+                                        {{-- @if($s->ploID==$i) @break @endif --}}
+                                    {{-- @endwhile --}}
                                 @endif
+                                @if($i%$plos->count()==0) @break @endif
                             @endforeach
                         </tr>
                     @endforeach
