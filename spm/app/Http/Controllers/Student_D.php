@@ -56,23 +56,23 @@ class Student_D extends Controller
                 WHEN courseID="ACN305" THEN 13
                 WHEN courseID="MIS340" THEN 14
                 WHEN courseID="MIS341" THEN 15
+                WHEN courseID="ACN302" THEN 16
                 ELSE 0
                 END AS id')
             )
             ->where('studentID', $student->studentID)
             ->groupBy('courseID')
             ->get();
-        $p1 = DB::table('view_student_co')
+        $p1 = DB::table('view_student_co') //student co
             ->join('cos', 'view_student_co.coID', '=', 'cos.coID')
             ->select('studentID', 'courseID', 'cos.coNo', 'co_percentage')
             ->where('studentID', $student->studentID)
             ->get();
-        $p2 = DB::table('course_plo_percentage')
+        $p2 = DB::table('course_plo_percentage') //student plo
             ->where('studentID', $student->studentID)
             ->join('plos', 'plos.ploID', '=', 'course_plo_percentage.ploID')
             ->get();
         $arr = array();
-        $i=null;
         return view('pages/student/overallReport')->with(
             [
                 'student' => $student,
@@ -84,8 +84,7 @@ class Student_D extends Controller
                 'success' => $success,
                 'p1' => $p1,
                 'p2' => $p2,
-                'arr' => $arr,
-                'i'=>$i
+                'arr' => $arr
             ]
         );
     }
@@ -101,14 +100,14 @@ class Student_D extends Controller
             )
             ->where('studentID', $student->studentID)
             ->get();
-        $dpth = DB::table('programs')
+        $dpth = DB::table('programs') //student department
             ->join('students', 'students.programID', '=', 'programs.programID')
             ->select('departmentID')
             ->where('students.programID', $student->programID)
             ->limit(1)
             ->first();
 
-        $pth = DB::table('programs')
+        $pth = DB::table('programs') //student programID
             ->join('students', 'students.programID', '=', 'programs.programID')
             ->select('programs.programID')
             ->where('students.programID', $student->programID)
@@ -134,9 +133,9 @@ class Student_D extends Controller
             ->where('programs.programID', $pth->programID)
             ->groupBy('plos.ploNo')
             ->get();
-        $arrp = array();
-        $arrs = array();
-        $arrd = array();
+        $arrp = array(); //program
+        $arrs = array(); //student
+        $arrd = array(); //department
         foreach ($stdplo as $s)
             array_push($arrs, [$s->ploNo, (float)$s->success]);
         foreach ($dptplo as $s)

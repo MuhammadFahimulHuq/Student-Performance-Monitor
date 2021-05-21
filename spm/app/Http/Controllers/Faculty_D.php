@@ -103,7 +103,7 @@ class Faculty_D extends Controller
         );
     }
 
-    public function hsr(Request $request, $id)
+    public function hsr(Request $request, $id) //help student report
     {
         $faculty = Employee::where('employeeID', $id)->first();
         $isStudent = Student::select("*")->where('studentID', $request->input('tsID'))->exists();
@@ -130,7 +130,7 @@ class Faculty_D extends Controller
             return redirect()->back()->with(['message' => 'Invalid Course', 'faculty' => $faculty]);
         }
     }
-    public function showsR()
+    public function showsR() //student report
     {
         $cID = NULL;
         $arr = array();
@@ -158,6 +158,7 @@ class Faculty_D extends Controller
                 WHEN courseID="ACN305" THEN 13
                 WHEN courseID="MIS340" THEN 14
                 WHEN courseID="MIS341" THEN 15
+                WHEN courseID="ACN302" THEN 16
                 ELSE 0
                 END AS id')
             )
@@ -189,7 +190,7 @@ class Faculty_D extends Controller
         );
     }
 
-    public function showH()
+    public function showH() //homepage
     {
         $faculty = Session::get('faculty');
         $card1 = DB::table('faculty_plo')
@@ -211,6 +212,7 @@ class Faculty_D extends Controller
                 WHEN courseID="ACN305" THEN 13
                 WHEN courseID="MIS340" THEN 14
                 WHEN courseID="MIS341" THEN 15
+                WHEN courseID="ACN302" THEN 16
                 ELSE 0
                 END AS id')
             )

@@ -20,6 +20,7 @@
     },
     legend: {position: 'none'}
     };
+
     var dptplo = new google.visualization.DataTable();
     dptplo.addColumn('number', 'PLO');
     dptplo.addColumn('number', 'Success');
@@ -58,6 +59,7 @@
     var chart = new google.visualization.ColumnChart(
     document.getElementById('chart_div1'));
     chart.draw(stdplo, stdploO);
+
     var chart = new google.visualization.ColumnChart(
     document.getElementById('chart_div2'));
     chart.draw(dptplo, dptploO);
