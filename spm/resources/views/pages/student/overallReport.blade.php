@@ -76,7 +76,7 @@ $(document).ready(function() {
 @endsection
 
 @section('content')
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-xl-12 mb-30">
             <div class="card-box height-100-p pd-20">
                 <h2 class="h4 mb-20">PLO Achievements</h2>
@@ -88,24 +88,23 @@ $(document).ready(function() {
                         @endforeach
                     </tr>
                     @foreach ($courses as $c)
-                    <?php $i=1 ?>
+                    php $i=1
                         <tr>
                             <th>{{ $c->courseID }}</th>
-                            {{-- FIX --}}
                             @foreach ($success as $s)
                             {{$i}}
-                                {{-- @if($c->courseID != $s->courseID) @continue @endif --}}
+                                @if($c->courseID != $s->courseID) @continue @endif
                                 @if ($c->courseID == $s->courseID && $s->ploID!=$i)
                                     <th>{{ceil($s->success) }}</th>
-                                    <?php $i+=1; ?>
+                                    php $i+=1;
                                 @else
-                                    {{-- @while(true) --}}
-                                        <?php $i++; ?>
-                                        {{-- {{$i}}--{{$s->ploID}} --}}
-                                        {{-- @if($i>$plos->count()) @break @endif --}}
+                                    @while(true)
+                                        php $i++;
+                                        {{$i}}--{{$s->ploID}}
+                                        @if($i>$plos->count()) @break @endif
                                         <th>N/A</th>
-                                        {{-- @if($s->ploID==$i) @break @endif --}}
-                                    {{-- @endwhile --}}
+                                        @if($s->ploID==$i) @break @endif
+                                    @endwhile
                                 @endif
                                 @if($i%$plos->count()==0) @break @endif
                             @endforeach
@@ -114,7 +113,7 @@ $(document).ready(function() {
                 </table>
             </div>
         </div>
-    </div>
+    </div> --}}
     <div class="row">
         <div class="col-xl-12 mb-30">
             <div class="card-box height-100-p pd-20">

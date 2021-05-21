@@ -48,10 +48,13 @@ class Registration extends Controller
 DB::statement("INSERT INTO `users` (user_id, username, password, userType) VALUES
 ('1', '1729416', '1', 'student'),
 ('2', '25', '1', 'higherOfficial'),
-('3', '37', '1', 'faculty'),
+('3', '35', '1', 'faculty'),
 ('4', '10', '1', 'faculty'),
 ('5', '1623112', '1', 'student'),
-('6', '1622731', '1', 'student');");
+('6', '1711799', '1', 'student'),
+('7', '1614140', '1', 'student'),
+('8', '1622731', '1', 'student');");
+
 
 DB::statement("INSERT INTO `schools` (schoolID,schoolName) VALUES
 ('1','Engineering, Technology & Sciences'),
@@ -13933,7 +13936,7 @@ from students s, marksDisseminations m, assessments a,cos c
 WHERE s.studentID=m.studentID AND a.assessmentID=m.assessmentID AND a.coID=c.coID
 GROUP by s.studentID,c.coID;");
 DB::statement("CREATE VIEW IF NOT EXISTS course_plo_percentage AS
-SELECT studentID,courseID,p.ploID,AVG(co_percentage) sucess
+SELECT studentID,courseID,p.ploID,AVG(co_percentage) success
 FROM view_student_co vt, cos c, comappings cm, plos p
 WHERE vt.coID=c.coID AND cm.ploID=p.ploID and c.coID=cm.coID
 GROUP BY studentID,c.courseID,p.ploID;");

@@ -50,6 +50,12 @@ class Student_D extends Controller
                 WHEN courseID="CSE201" THEN 7
                 WHEN courseID="CSE216+L" THEN 8
                 WHEN courseID="CSE303+L" THEN 9
+                WHEN courseID="ACN201" THEN 10
+                WHEN courseID="ACN202" THEN 11
+                WHEN courseID="ACN301" THEN 12
+                WHEN courseID="ACN305" THEN 13
+                WHEN courseID="MIS340" THEN 14
+                WHEN courseID="MIS341" THEN 15
                 ELSE 0
                 END AS id')
             )
@@ -90,7 +96,7 @@ class Student_D extends Controller
         $stdplo = DB::table('view_student_plo')
             ->join('plos', 'view_student_plo.ploid', '=', 'plos.ploid')
             ->select(
-                DB::raw('plos.ploID as ploNo'),
+                DB::raw('plos.ploNo'),
                 DB::raw('view_student_plo.plo_percentage as success')
             )
             ->where('studentID', $student->studentID)
@@ -112,21 +118,21 @@ class Student_D extends Controller
             ->join('plos', 'view_student_plo.ploID', '=', 'plos.ploID')
             ->join('programs', 'plos.programID', '=', 'programs.programID')
             ->select(
-                DB::raw('plos.ploID as ploNo'),
+                DB::raw('plos.ploNo'),
                 DB::raw('AVG(view_student_plo.plo_percentage) as success')
             )
             ->where('programs.departmentID', $dpth->departmentID)
-            ->groupBy('plos.ploID')
+            ->groupBy('plos.ploNo')
             ->get();
         $ptplo = DB::table('view_student_plo')
             ->join('plos', 'view_student_plo.ploID', '=', 'plos.ploID')
             ->join('programs', 'plos.programID', '=', 'programs.programID')
             ->select(
-                DB::raw('plos.ploID as ploNo'),
+                DB::raw('plos.ploNo'),
                 DB::raw('AVG(view_student_plo.plo_percentage) as success')
             )
             ->where('programs.programID', $pth->programID)
-            ->groupBy('plos.ploID')
+            ->groupBy('plos.ploNo')
             ->get();
         $arrp = array();
         $arrs = array();
