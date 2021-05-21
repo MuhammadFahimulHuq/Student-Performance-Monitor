@@ -133,15 +133,58 @@ class Faculty_D extends Controller
     public function showsR()
     {
         $cID = NULL;
+        $arr = array();
+        $p1=NULL;
+        $p2=NULL;
+        $courses = NULL;
         if (!empty(Session::get('cID'))) {
             $cID = Session::get('cID');
+            $courses = DB::table('course_plo_percentage')
+            ->select(
+                'courseID',
+                DB::raw('CASE
+                WHEN courseID="CSE203+L" THEN 1
+                WHEN courseID="CSE204+L" THEN 2
+                WHEN courseID="CSE309" THEN 3
+                WHEN courseID="CSE307" THEN 4
+                WHEN courseID="CSE210+L" THEN 5
+                WHEN courseID="CSE214" THEN 6
+                WHEN courseID="CSE201" THEN 7
+                WHEN courseID="CSE216+L" THEN 8
+                WHEN courseID="CSE303+L" THEN 9
+                WHEN courseID="ACN201" THEN 10
+                WHEN courseID="ACN202" THEN 11
+                WHEN courseID="ACN301" THEN 12
+                WHEN courseID="ACN305" THEN 13
+                WHEN courseID="MIS340" THEN 14
+                WHEN courseID="MIS341" THEN 15
+                ELSE 0
+                END AS id')
+            )
+            ->where('studentID', $cID)
+            ->groupBy('courseID')
+            ->get();
+        $p1 = DB::table('view_student_co')
+            ->join('cos', 'view_student_co.coID', '=', 'cos.coID')
+            ->select('studentID', 'courseID', 'cos.coNo', 'co_percentage')
+            ->where('studentID', $cID)
+            ->get();
+        $p2 = DB::table('course_plo_percentage')
+            ->where('studentID', $cID)
+            ->join('plos', 'plos.ploID', '=', 'course_plo_percentage.ploID')
+            ->get();
         }
         $faculty = Session::get('faculty');
         return view('pages/faculty/studentreport')->with(
             [
                 'faculty' => $faculty,
                 'username' => $faculty->firstname,
-                'userType' => 'faculty'
+                'userType' => 'faculty',
+                'arr' => $arr,
+                'p1'=>$p1,
+                'p2'=>$p2,
+                'cID'=>$cID,
+                'courses'=>$courses
             ]
         );
     }
@@ -162,6 +205,12 @@ class Faculty_D extends Controller
                 WHEN courseID="CSE201" THEN 7
                 WHEN courseID="CSE216+L" THEN 8
                 WHEN courseID="CSE303+L" THEN 9
+                WHEN courseID="ACN201" THEN 10
+                WHEN courseID="ACN202" THEN 11
+                WHEN courseID="ACN301" THEN 12
+                WHEN courseID="ACN305" THEN 13
+                WHEN courseID="MIS340" THEN 14
+                WHEN courseID="MIS341" THEN 15
                 ELSE 0
                 END AS id')
             )

@@ -8,6 +8,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+
 class HigerO_D extends Controller
 {
     public function index($id)
@@ -99,19 +100,6 @@ class HigerO_D extends Controller
         );
     }
 
-    public function hsr(Request $request, $id)
-    {
-        $faculty = Employee::where('employeeID', $id)->first();
-        $isStudent = Student::select("*")->where('studentID', $request->input('tsID'))->exists();
-        if ($isStudent) {
-            return redirect('/studentReport')->with([
-                'faculty' => $faculty,
-                'cID' => $request->input('tsID')
-            ]);
-        } else {
-            return redirect()->back()->with(['message' => 'Invalid StudentID', 'faculty' => $faculty]);
-        }
-    }
 
     public function hcr(Request $request, $id)
     {
@@ -119,37 +107,112 @@ class HigerO_D extends Controller
         $isCourse = Course::select("*")->where('courseID', $request->input('tcID'))->exists();
         if ($isCourse) {
             return redirect('/courseReport')->with([
-                'faculty' => $faculty,
+                'higherO' => $faculty,
                 'cID' => $request->input('tcID')
             ]);
         } else {
             return redirect()->back()->with(['message' => 'Invalid Course', 'faculty' => $faculty]);
         }
     }
+
+    public function hsr(Request $request, $id)
+    {
+        $higherO = Employee::where('employeeID', $id)->first();
+        $isStudent = Student::select("*")->where('studentID', $request->input('tsID'))->exists();
+        if ($isStudent) {
+            return redirect('/studentReportO')->with([
+                'higherO' => $higherO,
+                'cID' => $request->input('tsID')
+            ]);
+        } else {
+            return redirect()->back()->with(['message' => 'Invalid StudentID', 'higherO' => $higherO]);
+        }
+    }
+
     public function showsR()
     {
-        // $cID = NULL;
-        // if (!empty(Session::get('cID'))) {
-        //     $cID = Session::get('cID');
-        // }
+        $cID = NULL;
+        $arr = array();
+        $p1 = NULL;
+        $p2 = NULL;
+        $courses = NULL;
+        if (!empty(Session::get('cID'))) {
+            $cID = Session::get('cID');
+            $courses = DB::table('course_plo_percentage')
+                ->select(
+                    'courseID',
+                    DB::raw('CASE
+                WHEN courseID="CSE203+L" THEN 1
+                WHEN courseID="CSE204+L" THEN 2
+                WHEN courseID="CSE309" THEN 3
+                WHEN courseID="CSE307" THEN 4
+                WHEN courseID="CSE210+L" THEN 5
+                WHEN courseID="CSE214" THEN 6
+                WHEN courseID="CSE201" THEN 7
+                WHEN courseID="CSE216+L" THEN 8
+                WHEN courseID="CSE303+L" THEN 9
+                WHEN courseID="ACN201" THEN 10
+                WHEN courseID="ACN202" THEN 11
+                WHEN courseID="ACN301" THEN 12
+                WHEN courseID="ACN305" THEN 13
+                WHEN courseID="MIS340" THEN 14
+                WHEN courseID="MIS341" THEN 15
+                ELSE 0
+                END AS id')
+                )
+                ->where('studentID', $cID)
+                ->groupBy('courseID')
+                ->get();
+            $p1 = DB::table('view_student_co')
+                ->join('cos', 'view_student_co.coID', '=', 'cos.coID')
+                ->select('studentID', 'courseID', 'cos.coNo', 'co_percentage')
+                ->where('studentID', $cID)
+                ->get();
+            $p2 = DB::table('course_plo_percentage')
+                ->where('studentID', $cID)
+                ->join('plos', 'plos.ploID', '=', 'course_plo_percentage.ploID')
+                ->get();
+        }
         $higherO = Session::get('higherO');
         return view('pages/higher_official/studentreport')->with(
             [
                 'higherO' => $higherO,
                 'username' => $higherO->firstname,
-                'userType' => 'Higher Official'
+                'userType' => 'Higher Official',
+                'arr' => $arr,
+                'p1' => $p1,
+                'p2' => $p2,
+                'cID' => $cID,
+                'courses' => $courses
             ]
         );
     }
 
     public function showH()
     {
+        $enrollment = DB::table('students')
+            ->join('programs', 'programs.programID', '=', 'students.programID')
+            ->select('programs.programID', 'programs.departmentID', 'students.admissionDate', DB::raw('COUNT(students.studentID) AS amount'))
+            ->GroupBy('programs.departmentID', 'programs.programID', 'students.admissionDate')
+            ->OrderBy('students.admissionDate')
+            ->get();
+        $programs= DB::table('students')
+        ->join('programs', 'programs.programID', '=', 'students.programID')
+        ->select('programs.programID')
+        ->GroupBy('programs.programID')
+        ->get();
+        $departments= DB::table('students')
+        ->join('programs', 'programs.programID', '=', 'students.programID')
+        ->select('programs.departmentID')
+        ->GroupBy('programs.departmentID')
+        ->get();
         $higherO = Session::get('higherO');
         return view('pages/higher_official/higherOdashboard')->with(
             [
                 'higherO' => $higherO,
                 'username' => $higherO->firstname,
-                'userType' => 'Higher Official'
+                'userType' => 'Higher Official',
+                'departments' =>$departments
             ]
         );
     }
