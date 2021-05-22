@@ -13978,7 +13978,7 @@ FROM(
 SELECT studentID,sectionID,ta.assessmentTypeID,SUM(marksObtained) mg,SUM(marksObtainable) mo,assessmentPercentage ap
 FROM marksDisseminations m, assessments a,assessmentTypes ta
 WHERE m.assessmentID=a.assessmentID and ta.assessmentTypeID=a.assessmentTypeID
-GROUP BY studentID,ta.assessmentTypeID) vT) vt
+GROUP BY studentID,ta.assessmentTypeID,sectionID,assessmentPercentage) vT) vt
 GROUP  BY studentID, sectionID) vvT;");
 
 return redirect()->back()->with('message', 'Database Populated');

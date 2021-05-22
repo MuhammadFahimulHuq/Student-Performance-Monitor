@@ -38,6 +38,10 @@
         @yield('chart')
 
     </script>
+    <script>
+        @yield('chart2')
+
+    </script>
 </head>
 
 <body>

@@ -48,6 +48,7 @@ Route::get('/studentReport', [Faculty_D::class, 'showsR']);
 Route::get('/courseReport/{id}/d', [Faculty_D::class, 'cR']);
 Route::get('/courseReport', [Faculty_D::class, 'showcR']);
 Route::POST('/hsr/{id}/d', [Faculty_D::class, 'hsr'])->name('hsr');
+Route::POST('/hsg/{id}/d', [Faculty_D::class, 'hsg'])->name('hsg');
 Route::POST('/hcr/{id}/d', [Faculty_D::class, 'hcr'])->name('hcr');
 
 //higerOfficial

@@ -29,61 +29,46 @@ class HigerO_D extends Controller
     public function showcR()
     {
         $higherO = Session::get('higherO');
-        // $cID = NULL;
-        // $c1 = NULL;
-        // $c2 = NULL;
-        // $c3 = NULL;
-        // $c4 = NULL;
-        // $arr = array();
-        // if (!empty(Session::get('cID'))) {
+        $faculty =NULL;
+        $startDate = NULL;
+        $endtDate = NULL;
+        $garray1 = array();
+        if (!empty(Session::get('startDate'))) {
+            $startDate = Session::get('startDate');
+            $endDate = Session::get('endDate');
+            $courseID = (string)Session::get('courseID');
 
-        //     $cID = Session::get('cID');
-        //     if (DB::table('faculty_co')
-        //         ->select('faculty_co.courseID', 'coNo', DB::raw('AVG(co_percentage) as success'))
-        //         ->join('cos', 'cos.coID', '=', 'faculty_co.coID')
-        //         ->where('faculty_co.courseID', $cID)
-        //         ->where('faculty_co.FemployeeID', $faculty->employeeID)
-        //         ->groupBy('faculty_co.courseID', 'faculty_co.coID', 'coNo')
-        //         ->exists()
-        //     ) {
-        //         $c1 = DB::table('faculty_co')
-        //             ->select('faculty_co.courseID', 'coNo', DB::raw('AVG(co_percentage) as success'))
-        //             ->join('cos', 'cos.coID', '=', 'faculty_co.coID')
-        //             ->where('faculty_co.courseID', $cID)
-        //             ->where('faculty_co.FemployeeID', $faculty->employeeID)
-        //             ->groupBy('faculty_co.courseID', 'faculty_co.coID', 'coNo')
-        //             ->get();
-        //     }
-        //     $c2 = DB::table('faculty_co')
-        //         ->select('faculty_co.courseID', 'coNo', DB::raw('AVG(co_percentage) as success'))
-        //         ->join('cos', 'cos.coID', '=', 'faculty_co.coID')
-        //         ->where('faculty_co.courseID', $cID)
-        //         ->groupBy('faculty_co.courseID', 'faculty_co.coID', 'coNo')
-        //         ->get();
-        //     if (DB::table('faculty_plo')
-        //         ->select('faculty_plo.courseID', 'ploNo', DB::raw('AVG(co_percentage) as success'))
-        //         ->join('plos', 'plos.ploID', '=', 'faculty_plo.ploID')
-        //         ->where('faculty_plo.courseID', $cID)
-        //         ->where('FemployeeID', $faculty->employeeID)
-        //         ->groupBy('faculty_plo.courseID', 'faculty_plo.ploID', 'ploNo')
-        //         ->exists()
-        //     ) {
-        //         $c3 = DB::table('faculty_plo')
-        //             ->select('faculty_plo.courseID', 'ploNo', DB::raw('AVG(co_percentage) as success'))
-        //             ->join('plos', 'plos.ploID', '=', 'faculty_plo.ploID')
-        //             ->where('faculty_plo.courseID', $cID)
-        //             ->where('FemployeeID', $faculty->employeeID)
-        //             ->groupBy('faculty_plo.courseID', 'faculty_plo.ploID', 'ploNo')
-        //             ->get();
-        //     }
-        //     $c4 = DB::table('faculty_plo')
-        //         ->select('faculty_plo.courseID', 'ploNo', DB::raw('AVG(co_percentage) as success'))
-        //         ->join('plos', 'plos.ploID', '=', 'faculty_plo.ploID')
-        //         ->where('faculty_plo.courseID', $cID)
-        //         ->groupBy('faculty_plo.courseID', 'faculty_plo.ploID', 'ploNo')
-        //         ->get();
-        // }
-        // $flag = false;
+            DB::statement("DROP VIEW IF EXISTS temp1");
+            DB::statement("DROP VIEW IF EXISTS temp2");
+
+            DB::statement("CREATE VIEW temp1 AS
+            SELECT FemployeeID,courseID,coNo,AVG(mo/mg*100) co_percentage
+            FROM (SELECT s.studentID,FemployeeID,c.courseID,c.coNo,SUM(marksObtained) mo,SUM(marksObtainable) mg
+            from students s, marksDisseminations m, assessments a,cos c,comappings cm,plos p,assessmentTypes ta,sections st
+            WHERE s.studentID=m.studentID AND a.assessmentID=m.assessmentID AND a.coID=c.coID AND ta.assessmentTypeID=a.assessmentTypeID
+            AND st.sectionID=ta.sectionID AND p.ploID=cm.ploID AND c.coID = cm.coID
+            AND (c.courseID='$courseID' AND st.semesterID>=$startDate AND st.semesterID<=$endDate)
+            GROUP by FemployeeID,s.studentID,c.courseID,st.sectionID,c.coID,c.coNo) VT
+            GROUP By FemployeeID,courseID,coNo;");
+            DB::statement("CREATE VIEW temp2 AS
+            SELECT FemployeeID,courseID,ploNo,AVG(mo/mg*100) plo_percentage
+            FROM(SELECT s.studentID,FemployeeID,c.courseID,st.sectionID,p.ploNo,SUM(marksObtained) mo,SUM(marksObtainable) mg
+            from students s, marksDisseminations m, assessments a,cos c,comappings cm,plos p,assessmentTypes ta,sections st
+            WHERE s.studentID=m.studentID AND a.assessmentID=m.assessmentID AND a.coID=c.coID AND ta.assessmentTypeID=a.assessmentTypeID
+            AND st.sectionID=ta.sectionID AND p.ploID=cm.ploID AND c.coID = cm.coID AND
+            (c.courseID='$courseID' AND st.semesterID>=$startDate AND st.semesterID<=$endDate)
+            GROUP by FemployeeID,s.studentID,c.courseID,st.sectionID,p.ploID,p.ploNo) VT
+            GROUP BY FemployeeID,courseID,ploNo;");
+
+            $faculty=DB::table('temps')
+                ->join('employees','employees.employeeID','=','temps.FemployeeID')
+                ->select(DB::raw('DISTINCT FemployeeID'),'firstname')
+                ->get();
+            return $faculty;
+            // foreach ($data1 as $d)
+            //     array_push($garray, [$d->semesterName, (float)$d->gp]);
+        }
+
         return view('pages/higher_official/coursereport')->with(
             [
                 'higherO' => $higherO,
@@ -103,15 +88,19 @@ class HigerO_D extends Controller
 
     public function hcr(Request $request, $id)
     {
-        $faculty = Employee::where('employeeID', $id)->first();
-        $isCourse = Course::select("*")->where('courseID', $request->input('tcID'))->exists();
-        if ($isCourse) {
-            return redirect('/courseReport')->with([
-                'higherO' => $faculty,
-                'cID' => $request->input('tcID')
+        $higherO = Employee::where('employeeID', $id)->first();
+        $startDate = $request->input('startDate');
+        $endtDate = $request->input('endDate');
+        $courseID = (string)$request->input('courseID');
+        if ($startDate <= $endtDate) {
+            return redirect('/courseReportO')->with([
+                'higherO' => $higherO,
+                'startDate' => $startDate,
+                'endDate' => $endtDate,
+                'courseID' => $courseID
             ]);
         } else {
-            return redirect()->back()->with(['message' => 'Invalid Course', 'faculty' => $faculty]);
+            return redirect()->back()->with(['message' => 'Invalid Range', 'higherO' => $higherO]);
         }
     }
 
@@ -196,23 +185,23 @@ class HigerO_D extends Controller
             ->GroupBy('programs.departmentID', 'programs.programID', 'students.admissionDate')
             ->OrderBy('students.admissionDate')
             ->get();
-        $programs= DB::table('students')
-        ->join('programs', 'programs.programID', '=', 'students.programID')
-        ->select('programs.programID')
-        ->GroupBy('programs.programID')
-        ->get();
-        $departments= DB::table('students')
-        ->join('programs', 'programs.programID', '=', 'students.programID')
-        ->select('programs.departmentID')
-        ->GroupBy('programs.departmentID')
-        ->get();
+        $programs = DB::table('students')
+            ->join('programs', 'programs.programID', '=', 'students.programID')
+            ->select('programs.programID')
+            ->GroupBy('programs.programID')
+            ->get();
+        $departments = DB::table('students')
+            ->join('programs', 'programs.programID', '=', 'students.programID')
+            ->select('programs.departmentID')
+            ->GroupBy('programs.departmentID')
+            ->get();
         $higherO = Session::get('higherO');
         return view('pages/higher_official/higherOdashboard')->with(
             [
                 'higherO' => $higherO,
                 'username' => $higherO->firstname,
                 'userType' => 'Higher Official',
-                'departments' =>$departments
+                'departments' => $departments
             ]
         );
     }

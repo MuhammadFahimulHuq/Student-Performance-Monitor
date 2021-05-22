@@ -117,6 +117,24 @@ class Faculty_D extends Controller
         }
     }
 
+
+    public function hsg(Request $request, $id) //help student grade
+    {
+        $faculty = Employee::where('employeeID', $id)->first();
+        $startDate = $request->input('startDate');
+        $endtDate = $request->input('endDate');
+        if ($startDate <= $endtDate) {
+            return redirect('/faculty')->with([
+                'faculty' => $faculty,
+                'startDate' => $startDate,
+                'endDate' => $endtDate
+            ]);
+        } else {
+            return redirect()->back()->with(['message' => 'Invalid Range', 'faculty' => $faculty]);
+        }
+    }
+
+
     public function hcr(Request $request, $id)
     {
         $faculty = Employee::where('employeeID', $id)->first();
@@ -134,15 +152,15 @@ class Faculty_D extends Controller
     {
         $cID = NULL;
         $arr = array();
-        $p1=NULL;
-        $p2=NULL;
+        $p1 = NULL;
+        $p2 = NULL;
         $courses = NULL;
         if (!empty(Session::get('cID'))) {
             $cID = Session::get('cID');
             $courses = DB::table('course_plo_percentage')
-            ->select(
-                'courseID',
-                DB::raw('CASE
+                ->select(
+                    'courseID',
+                    DB::raw('CASE
                 WHEN courseID="CSE203+L" THEN 1
                 WHEN courseID="CSE204+L" THEN 2
                 WHEN courseID="CSE309" THEN 3
@@ -161,19 +179,19 @@ class Faculty_D extends Controller
                 WHEN courseID="ACN302" THEN 16
                 ELSE 0
                 END AS id')
-            )
-            ->where('studentID', $cID)
-            ->groupBy('courseID')
-            ->get();
-        $p1 = DB::table('view_student_co')
-            ->join('cos', 'view_student_co.coID', '=', 'cos.coID')
-            ->select('studentID', 'courseID', 'cos.coNo', 'co_percentage')
-            ->where('studentID', $cID)
-            ->get();
-        $p2 = DB::table('course_plo_percentage')
-            ->where('studentID', $cID)
-            ->join('plos', 'plos.ploID', '=', 'course_plo_percentage.ploID')
-            ->get();
+                )
+                ->where('studentID', $cID)
+                ->groupBy('courseID')
+                ->get();
+            $p1 = DB::table('view_student_co')
+                ->join('cos', 'view_student_co.coID', '=', 'cos.coID')
+                ->select('studentID', 'courseID', 'cos.coNo', 'co_percentage')
+                ->where('studentID', $cID)
+                ->get();
+            $p2 = DB::table('course_plo_percentage')
+                ->where('studentID', $cID)
+                ->join('plos', 'plos.ploID', '=', 'course_plo_percentage.ploID')
+                ->get();
         }
         $faculty = Session::get('faculty');
         return view('pages/faculty/studentreport')->with(
@@ -182,10 +200,10 @@ class Faculty_D extends Controller
                 'username' => $faculty->firstname,
                 'userType' => 'faculty',
                 'arr' => $arr,
-                'p1'=>$p1,
-                'p2'=>$p2,
-                'cID'=>$cID,
-                'courses'=>$courses
+                'p1' => $p1,
+                'p2' => $p2,
+                'cID' => $cID,
+                'courses' => $courses
             ]
         );
     }
@@ -193,6 +211,24 @@ class Faculty_D extends Controller
     public function showH() //homepage
     {
         $faculty = Session::get('faculty');
+        $startDate = NULL;
+        $endtDate = NULL;
+        $garray = array();
+        if (!empty(Session::get('startDate'))) {
+            $startDate = Session::get('startDate');
+            $endDate = Session::get('endDate');
+            $data =
+                DB::table('v_transcript')
+                ->join('sections', 'sections.sectionID', '=', 'v_transcript.sectionID')
+                ->join('semesters', 'semesters.semesterID', '=', 'sections.semesterID')
+                ->select('semesterName', DB::raw('AVG(gradePoint) as gp'))
+                ->where('FemployeeID', $faculty->employeeID)
+                ->whereRaw('semesters.semesterID >= ? AND semesters.semesterID <= ?', [$startDate, $endDate])
+                ->groupBy('courseID', 'startDate', 'semesters.semesterName')
+                ->get();
+            foreach ($data as $d)
+                array_push($garray, [$d->semesterName, (float)$d->gp]);
+        }
         $card1 = DB::table('faculty_plo')
             ->select(
                 DB::raw('DISTINCT courseID'),
@@ -253,7 +289,9 @@ class Faculty_D extends Controller
                 'c4' => $card4,
                 'arr' => $arr,
                 'p1' => $p1,
-                'p2' => $p2
+                'p2' => $p2,
+                'startDate'=>$startDate,
+                'garray' =>$garray
             ]
         );
     }
