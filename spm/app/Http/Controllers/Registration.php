@@ -13930,16 +13930,19 @@ SELECT s.studentID,p.ploID,(SUM(marksObtained)/SUM(marksObtainable))*100 plo_per
 from students s, marksDisseminations m, assessments a,cos c,comappings cm,plos p
 WHERE s.studentID=m.studentID AND a.assessmentID=m.assessmentID AND a.coID=c.coID AND p.ploID=cm.ploID AND c.coID = cm.coID GROUP by s.studentID,p.ploID
 ;");
+
 DB::statement(" CREATE VIEW IF NOT EXISTS view_student_co AS
 SELECT s.studentID,c.coID,(SUM(marksObtained)/SUM(marksObtainable))*100 co_percentage
 from students s, marksDisseminations m, assessments a,cos c
 WHERE s.studentID=m.studentID AND a.assessmentID=m.assessmentID AND a.coID=c.coID
 GROUP by s.studentID,c.coID;");
+
 DB::statement("CREATE VIEW IF NOT EXISTS course_plo_percentage AS
 SELECT studentID,courseID,p.ploID,AVG(co_percentage) success
 FROM view_student_co vt, cos c, comappings cm, plos p
 WHERE vt.coID=c.coID AND cm.ploID=p.ploID and c.coID=cm.coID
 GROUP BY studentID,c.courseID,p.ploID;");
+
 DB::statement("CREATE VIEW IF NOT EXISTS faculty_plo AS
 SELECT s.studentID,FemployeeID,c.courseID,st.sectionID,p.ploID,(SUM(marksObtained)/SUM(marksObtainable))*100 co_percentage
 from students s, marksDisseminations m, assessments a,cos c,comappings cm,plos p,assessmentTypes ta,sections st
@@ -13953,6 +13956,30 @@ from students s, marksDisseminations m, assessments a,cos c,comappings cm,plos p
 WHERE s.studentID=m.studentID AND a.assessmentID=m.assessmentID AND a.coID=c.coID AND ta.assessmentTypeID=a.assessmentTypeID
 AND st.sectionID=ta.sectionID AND p.ploID=cm.ploID AND c.coID = cm.coID
 GROUP by FemployeeID,s.studentID,c.courseID,st.sectionID,c.coID;");
+
+DB::statement("CREATE VIEW IF NOT EXISTS v_transcript AS
+SELECT studentID,sectionID, Tmark,
+CASE
+    WHEN Tmark >= 85 THEN 4.00
+    WHEN Tmark >= 80 AND Tmark < 85 THEN 3.70
+    WHEN Tmark >= 75 AND Tmark < 80 THEN 3.30
+    WHEN Tmark >= 70 AND Tmark < 75 THEN 3.00
+    WHEN Tmark >= 65 AND Tmark < 70 THEN 2.70
+    WHEN Tmark >= 60 AND Tmark < 65 THEN 2.30
+    WHEN Tmark >= 55 AND Tmark < 60 THEN 2.00
+    WHEN Tmark >= 50 AND Tmark < 55 THEN 1.70
+    WHEN Tmark >= 45 AND Tmark < 50 THEN 1.30
+    WHEN Tmark >= 40 AND Tmark < 45 THEN 1.00
+    ELSE 0.00
+END AS gradePoint
+FROM (SELECT studentID, sectionID, SUM(mark) Tmark
+FROM(SELECT studentID,sectionID, (mg/mo)*ap mark
+FROM(
+SELECT studentID,sectionID,ta.assessmentTypeID,SUM(marksObtained) mg,SUM(marksObtainable) mo,assessmentPercentage ap
+FROM marksDisseminations m, assessments a,assessmentTypes ta
+WHERE m.assessmentID=a.assessmentID and ta.assessmentTypeID=a.assessmentTypeID
+GROUP BY studentID,ta.assessmentTypeID) vT) vt
+GROUP  BY studentID, sectionID) vvT;");
 
 return redirect()->back()->with('message', 'Database Populated');
     }

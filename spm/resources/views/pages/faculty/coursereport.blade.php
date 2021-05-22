@@ -18,7 +18,7 @@
     c2.addColumn('number', 'Success');
     c2.addRows(<?php echo json_encode($arr);?>);
     var c2_options = {
-        title: '{{$cID}} CO Achievement',
+        title: 'All Instructor {{$cID}} CO Achievement',
         hAxis: {
             title: 'CoNo',
         },
@@ -92,7 +92,7 @@ foreach($c3 as $p){
         c4.addColumn('number', 'Success');
         c4.addRows(<?php echo json_encode($arr);?>);
         var c4_options = {
-            title: '{{$cID}} PLO Achievement',
+            title: 'All Instructor {{$cID}} PLO Achievement',
             hAxis: {
                 title: 'PLO No',
             },
