@@ -107,7 +107,7 @@
         <div class="col-xl-3 mb-30">
             <div class="card-box height-100-p widget-style1 bg-danger">
                 <div class="card-body">
-                    <h5 class="card-title text-center">Lowest PLO</h5>
+                    <h5 class="card-title text-center">PLO No</h5>
                     <p class="card-text text-center">{{ $lowest->ploID }}</p>
                 </div>
             </div>
