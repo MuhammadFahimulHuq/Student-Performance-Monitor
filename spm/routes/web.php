@@ -56,10 +56,17 @@ Route::get('/HigherO/{id}/d', [HigerO_D::class, 'index']);
 Route::get('/HigherO', [HigerO_D::class, 'showH']);
 Route::get('/studentReportO/{id}/d', [HigerO_D::class, 'sR']);
 Route::get('/studentReportO', [HigerO_D::class, 'showsR']);
+Route::get('/schoolEnrollment', [HigerO_D::class, 'showsE']);
+Route::get('/schoolEnrollment/{id}/d', [HigerO_D::class, 'sE']);
+Route::get('/departmentEnrollment', [HigerO_D::class, 'showdE']);
+Route::get('/departmentEnrollment/{id}/d', [HigerO_D::class, 'dE']);
+Route::get('/programEnrollment', [HigerO_D::class, 'showpE']);
+Route::get('/programEnrollment/{id}/d', [HigerO_D::class, 'pE']);
 Route::get('/courseReportO/{id}/d', [HigerO_D::class, 'cR']);
 Route::get('/courseReportO', [HigerO_D::class, 'showcR']);
 Route::POST('/hsrO/{id}/d', [HigerO_D::class, 'hsr'])->name('hsr');
 Route::POST('/hcrO/{id}/d', [HigerO_D::class, 'hcr'])->name('hcr');
+Route::POST('/hse/{id}/d', [HigerO_D::class, 'hse'])->name('hse');
 
 
 

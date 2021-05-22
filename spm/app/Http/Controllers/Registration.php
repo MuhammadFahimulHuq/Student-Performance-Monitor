@@ -13981,6 +13981,13 @@ WHERE m.assessmentID=a.assessmentID and ta.assessmentTypeID=a.assessmentTypeID
 GROUP BY studentID,ta.assessmentTypeID,sectionID,assessmentPercentage) vT) vt
 GROUP  BY studentID, sectionID) vvT;");
 
+DB::statement("CREATE VIEW IF NOT EXISTS enrollment AS
+        SELECT COUNT(studentID) amount, p.programID, d.departmentID,sc.schoolID,schoolName,admissionDate
+        from students s, programs p,departments d,schools sc
+        WHERE p.programID=s.programID and p.departmentID=d.departmentID and d.schoolID=sc.schoolID
+        GROUP BY sc.schoolID,d.departmentID,p.programID,admissionDate,sc.schoolName;");
+
+
 return redirect()->back()->with('message', 'Database Populated');
     }
 }

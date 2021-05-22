@@ -50,6 +50,16 @@
         </a>
     </li>
     <li class="dropdown">
+        <a href="javascript:;" class="dropdown-toggle">
+            <span class="micon dw dw-house-1"></span><span class="mtext">Enrollment</span>
+        </a>
+        <ul class="submenu">
+            <li><a href="{{ '/schoolEnrollment/' . $higherO->employeeID . '/d' }}">School Enrollment</a></li>
+            <li><a href="{{ '/departmentEnrollment/' . $higherO->employeeID . '/d' }}">Department Enrollment</a></li>
+            <li><a href="{{ '/programEnrollment/' . $higherO->employeeID . '/d' }}">Program Enrollment</a></li>
+        </ul>
+    </li>
+    <li class="dropdown">
         <a href="{{ '/studentReportO/' . $higherO->employeeID . '/d' }}" class="dropdown-toggle">
             <span class="micon dw dw-list3"></span><span class="mtext">Student Report</span>
         </a>
