@@ -11,7 +11,7 @@
 
 
         var options = {
-        title: 'Separtment-Wise Enrollment',
+        title: 'School-Wise CGPA',
         chartArea: {width: '50%'},
         hAxis: {
         title: 'Number Of Student',
@@ -28,7 +28,7 @@
         }
         },
         vAxis: {
-        title: 'Semester',
+        title: 'Schools',
         textStyle: {
         fontSize: 14,
         bold: true,
@@ -59,15 +59,15 @@
         </ul>
     </li>
     {{-- <li class="dropdown">
-    <a href="javascript:;" class="dropdown-toggle">
-        <span class="micon dw dw-house-1"></span><span class="mtext">Higher Officials</a></span>
-    </a>
-    <ul class="submenu">
-        <li><a href="{{ '/vc/' . $higherO->employeeID . '/d' }}">VC-wise CGPA</a></li>
-        <li><a href="{{ '/dean/' . $higherO->employeeID . '/d' }}">Head-wise CGPA</a></li>
-        <li><a href="{{ '/head/' . $higherO->employeeID . '/d' }}">Dean-wise CGPA</a></li>
-    </ul>
-</li> --}}
+        <a href="javascript:;" class="dropdown-toggle">
+            <span class="micon dw dw-house-1"></span><span class="mtext">Higher Officials</a></span>
+        </a>
+        <ul class="submenu">
+            <li><a href="{{ '/vc/' . $higherO->employeeID . '/d' }}">VC-wise CGPA</a></li>
+            <li><a href="{{ '/dean/' . $higherO->employeeID . '/d' }}">Head-wise CGPA</a></li>
+            <li><a href="{{ '/head/' . $higherO->employeeID . '/d' }}">Dean-wise CGPA</a></li>
+        </ul>
+    </li> --}}
     <li class="dropdown">
         <a href="javascript:;" class="dropdown-toggle">
             <span class="micon dw dw-house-1"></span><span class="mtext">Enrollment</span>
@@ -94,44 +94,33 @@
     <div class="row">
         <div class="col-xl-12 mb-30">
             <div class="card-box height-100-p pd-20">
-                <h2 class="h4 mb-20 text-center">Enrollment</h2>
-                <form action="{{ '/hde/' . $higherO->employeeID . '/d' }}" method="POST" class="d-flex">
+                <h2 class="h4 mb-20 text-center">CGPA</h2>
+                <form action="{{ '/hsc/' . $higherO->employeeID . '/d' }}" method="POST" class="d-flex">
                     @csrf
                     <label class="mb-20" for="startDate">Choose Starting Date</label>
                     <select class="form-select mb-20" aria-label="Default select example" id="startDate" name="startDate">
-                        <option value="1">spring16</option>
-                        <option value="2">summer16</option>
-                        <option value="3">autumn16</option>
-                        <option value="4">spring17</option>
-                        <option value="5">summer17</option>
-                        <option value="6">autumn17</option>
-                        <option value="7">spring18</option>
-                        <option value="8">summer18</option>
-                        <option value="9">autumn18</option>
-                        <option value="10">spring19</option>
-                        <option value="11">summer19</option>
+                        <option value="12">autumn19</option>
+                        <option value="13">spring20</option>
+                        <option value="14">summer20</option>
+                        <option value="15">autumn20</option>
+                        <option value="16">spring21</option>
                     </select>
                     <label class="mb-20" for="endDate">Choose Ending Date</label>
                     <select class="form-select mb-20" aria-label="Default select example" id="endDate" name="endDate">
-                        <option value="1">spring16</option>
-                        <option value="2">summer16</option>
-                        <option value="3">autumn16</option>
-                        <option value="4">spring17</option>
-                        <option value="5">summer17</option>
-                        <option value="6">autumn17</option>
-                        <option value="7">spring18</option>
-                        <option value="8">summer18</option>
-                        <option value="9">autumn18</option>
-                        <option value="10">spring19</option>
-                        <option value="11">summer19</option>
+                        <option value="12">autumn19</option>
+                        <option value="13">spring20</option>
+                        <option value="14">summer20</option>
+                        <option value="15">autumn20</option>
+                        <option value="16">spring21</option>
                     </select>
-                    <label for="Department">Choose Departments:</label>
-                    <input type="checkbox" id="department1" name="department1" value="CSE">
-                    <label for="department1">CSE</label><br>
-                    <input type="checkbox" id="department2" name="department2" value="MIS">
-                    <label for="department2">MIS</label><br>
-                    <input type="checkbox" id="department3" name="department3" value="ACN">
-                    <label for="department3">ACN</label><br>
+                    <label for="School">Choose Schools:</label>
+                    <input type="checkbox" id="school1" name="school1" value="1">
+                    <label for="school1">Engineering, Technology & Sciences</label><br>
+                    <input type="checkbox" id="school2" name="school2" value="2">
+                    <label for="school2">Business & Entrepreneurship</label><br>
+                    {{-- <option value="3">Environment And Life Sciences</option>
+                    <option value="4">Liberal Arts & Social Sciences</option>
+                    <option value="5">Pharmacy And Public Health</option> --}}
                     <button class="btn btn-outline-success mb-20" type="submit">Show</button>
                 </form>
                 @if (session()->has('message'))
@@ -149,6 +138,5 @@
             </div>
         </div>
     </div>
-
 
 @endsection

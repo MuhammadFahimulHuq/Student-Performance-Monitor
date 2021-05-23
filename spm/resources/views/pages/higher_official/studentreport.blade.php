@@ -77,10 +77,25 @@
 
 @section('sidebar')
     <li class="dropdown">
-        <a href="{{ '/HigherO/' . $higherO->employeeID . '/d' }}" class="dropdown-toggle">
+        <a href="javascript:;" class="dropdown-toggle">
             <span class="micon dw dw-house-1"></span><span class="mtext">Home</a></span>
         </a>
+        <ul class="submenu">
+            <li><a href="{{ '/schoolcgpa/' . $higherO->employeeID . '/d' }}">School-wise CGPA</a></li>
+            <li><a href="{{ '/departmentcgpa/' . $higherO->employeeID . '/d' }}">Department-wise CGPA</a></li>
+            <li><a href="{{ '/programcgpa/' . $higherO->employeeID . '/d' }}">Program-wise CGPA</a></li>
+        </ul>
     </li>
+    {{-- <li class="dropdown">
+    <a href="javascript:;" class="dropdown-toggle">
+        <span class="micon dw dw-house-1"></span><span class="mtext">Higher Officials</a></span>
+    </a>
+    <ul class="submenu">
+        <li><a href="{{ '/vc/' . $higherO->employeeID . '/d' }}">VC-wise CGPA</a></li>
+        <li><a href="{{ '/dean/' . $higherO->employeeID . '/d' }}">Head-wise CGPA</a></li>
+        <li><a href="{{ '/head/' . $higherO->employeeID . '/d' }}">Dean-wise CGPA</a></li>
+    </ul>
+</li> --}}
     <li class="dropdown">
         <a href="javascript:;" class="dropdown-toggle">
             <span class="micon dw dw-house-1"></span><span class="mtext">Enrollment</span>
