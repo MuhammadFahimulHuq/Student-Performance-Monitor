@@ -34,7 +34,7 @@ class Login extends Controller
                     return app('App\Http\Controllers\Faculty_D')->index($faculty->employeeID);
                 }
                 if ($user->userType == 'higherOfficial')
-                    return app('App\Http\Controllers\HigerO_D')->index($user->user_id);
+                    return app('App\Http\Controllers\HigerO_D')->sC($user->user_id);
             }
         } else {
             return redirect()->back()->with('message', 'Invalid User');

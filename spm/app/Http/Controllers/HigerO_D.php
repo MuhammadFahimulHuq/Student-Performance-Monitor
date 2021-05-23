@@ -11,10 +11,20 @@ use Illuminate\Support\Facades\DB;
 
 class HigerO_D extends Controller
 {
-    public function index($id)
+    public function sC($id)
     {
         $higherO = Employee::where('employeeID', $id)->first();
-        return redirect('/HigherO')->with(['higherO' => $higherO]);
+        return redirect('/schoolcgpa')->with(['higherO' => $higherO]);
+    }
+    public function dC($id)
+    {
+        $higherO = Employee::where('employeeID', $id)->first();
+        return redirect('/departmentcgpa')->with(['higherO' => $higherO]);
+    }
+    public function pC($id)
+    {
+        $higherO = Employee::where('employeeID', $id)->first();
+        return redirect('/programcgpa')->with(['higherO' => $higherO]);
     }
     public function sR($id)
     {
@@ -208,19 +218,6 @@ class HigerO_D extends Controller
         );
     }
 
-    public function showH()
-    {
-        $higherO = Session::get('higherO');
-        return view('pages/higher_official/higherOdashboard')->with(
-            [
-                'higherO' => $higherO,
-                'username' => $higherO->firstname,
-                'userType' => 'Higher Official',
-            ]
-        );
-    }
-
-
     public function hse(Request $request, $id)
     {
         $higherO = Employee::where('employeeID', $id)->first();
@@ -273,6 +270,69 @@ class HigerO_D extends Controller
         $endtDate = $request->input('endDate');
         if ($startDate <= $endtDate && !empty($program)) {
             return redirect('/programEnrollment')->with([
+                'higherO' => $higherO,
+                'startDate' => $startDate,
+                'endDate' => $endtDate,
+                'program' => $program
+            ]);
+        } else {
+            return redirect()->back()->with(['message' => 'Invalid Range Or No Program Is Selected', 'higherO' => $higherO]);
+        }
+    }
+
+
+    public function hsc(Request $request, $id)
+    {
+        $higherO = Employee::where('employeeID', $id)->first();
+        $school = array();
+        if ($request->input('school1')) array_push($school, $request->input('school1'));
+        if ($request->input('school2')) array_push($school, $request->input('school2'));
+        $startDate = $request->input('startDate');
+        $endtDate = $request->input('endDate');
+        if ($startDate <= $endtDate && !empty($school)) {
+            return redirect('/schoolcgpa')->with([
+                'higherO' => $higherO,
+                'startDate' => $startDate,
+                'endDate' => $endtDate,
+                'school' => $school
+            ]);
+        } else {
+            return redirect()->back()->with(['message' => 'Invalid Range Or No School Is Selected', 'higherO' => $higherO]);
+        }
+    }
+
+    public function hdc(Request $request, $id)
+    {
+        $higherO = Employee::where('employeeID', $id)->first();
+        $department = array();
+        if ($request->input('department1')) array_push($department, $request->input('department1'));
+        if ($request->input('department2')) array_push($department, $request->input('department2'));
+        if ($request->input('department3')) array_push($department, $request->input('department3'));
+        $startDate = $request->input('startDate');
+        $endtDate = $request->input('endDate');
+        if ($startDate <= $endtDate && !empty($department)) {
+            return redirect('/departmentcgpa')->with([
+                'higherO' => $higherO,
+                'startDate' => $startDate,
+                'endDate' => $endtDate,
+                'department' => $department
+            ]);
+        } else {
+            return redirect()->back()->with(['message' => 'Invalid Range Or No Department Is Selected', 'higherO' => $higherO]);
+        }
+    }
+
+    public function hpc(Request $request, $id)
+    {
+        $higherO = Employee::where('employeeID', $id)->first();
+        $program = array();
+        if ($request->input('program1')) array_push($program, $request->input('program1'));
+        if ($request->input('program2')) array_push($program, $request->input('program2'));
+        if ($request->input('program3')) array_push($program, $request->input('program3'));
+        $startDate = $request->input('startDate');
+        $endtDate = $request->input('endDate');
+        if ($startDate <= $endtDate && !empty($program)) {
+            return redirect('/programcgpa')->with([
                 'higherO' => $higherO,
                 'startDate' => $startDate,
                 'endDate' => $endtDate,
@@ -446,4 +506,148 @@ class HigerO_D extends Controller
             ]
         );
     }
+
+
+    public function showsC()
+    {
+        $higherO = Session::get('higherO');
+        $startDate = NULL;
+        $endtDate = NULL;
+        $school = NULL;
+        $arr = array();
+        if (!empty(Session::get('startDate'))) {
+            $startDate = (int)Session::get('startDate');
+            $endDate = (int)Session::get('endDate');
+            $school = Session::get('school');
+
+            DB::statement("DROP VIEW IF EXISTS temps;");
+            DB::statement("CREATE VIEW temps AS
+            SELECT p.departmentID,s.programID,AVG(VVVT.cgpa) Acgpa
+            FROM(SELECT studentID,SUM(gpa)/COUNT(gpa) cgpa
+            FROM(SELECT studentID,semesterID,(TgradeWeight/Tcredit) gpa
+            FROM(SELECT vt.studentID,s.semesterID,SUM(vt.gradePoint*noOfCredit) TgradeWeight, SUM(noOfCredit) Tcredit
+            FROM v_transcript vt,sections s, registers r, courses c
+            WHERE vt.sectionID=s.sectionID AND r.studentID=vt.studentID AND s.courseID=c.courseID AND
+            s.semesterID>=$startDate AND s.semesterID<=$endDate
+            GROUP BY vt.studentID,s.semesterID ) VT) VVT
+            GROUP BY studentID)VVVT, students s,programs p
+            WHERE s.studentID=VVVT.studentID AND p.programID=s.programID
+            GROUP BY p.departmentID,s.programID;");
+
+            $data = DB::table('temps')
+                ->join('departments', 'departments.departmentID', '=', 'temps.departmentID')
+                ->join('schools', 'departments.schoolID', '=', 'schools.schoolID')
+                ->select('schoolName', DB::raw('AVG(Acgpa) AS Acgpa'))
+                ->whereIn('schools.schoolID', $school)
+                ->groupBy('schools.schoolName')
+                ->get();
+
+            array_push($arr, ['School', 'CGPA']);
+            foreach ($data as $d) {
+                array_push($arr, [$d->schoolName,(float)$d->Acgpa]);
+            }
+        }
+        return view('pages/higher_official/schoolcgpa')->with(
+            [
+                'higherO' => $higherO,
+                'username' => $higherO->firstname,
+                'userType' => 'Higher Official',
+                'startDate' => $startDate,
+                'arr' => $arr
+            ]
+        );
+    }
+
+    public function showdC()
+    {
+        $higherO = Session::get('higherO');
+        $startDate = NULL;
+        $endtDate = NULL;
+        $department = NULL;
+        $arr = array();
+        if (!empty(Session::get('startDate'))) {
+            $startDate = (int)Session::get('startDate');
+            $endDate = (int)Session::get('endDate');
+            $department = Session::get('department');
+
+            DB::statement("DROP VIEW IF EXISTS temps;");
+            DB::statement("CREATE VIEW temps AS
+            SELECT p.departmentID,s.programID,AVG(VVVT.cgpa) Acgpa
+            FROM(SELECT studentID,SUM(gpa)/COUNT(gpa) cgpa
+            FROM(SELECT studentID,semesterID,(TgradeWeight/Tcredit) gpa
+            FROM(SELECT vt.studentID,s.semesterID,SUM(vt.gradePoint*noOfCredit) TgradeWeight, SUM(noOfCredit) Tcredit
+            FROM v_transcript vt,sections s, registers r, courses c
+            WHERE vt.sectionID=s.sectionID AND r.studentID=vt.studentID AND s.courseID=c.courseID AND
+            s.semesterID>=$startDate AND s.semesterID<=$endDate
+            GROUP BY vt.studentID,s.semesterID ) VT) VVT
+            GROUP BY studentID)VVVT, students s,programs p
+            WHERE s.studentID=VVVT.studentID AND p.programID=s.programID
+            GROUP BY p.departmentID,s.programID;");
+
+            $data = DB::table('temps')
+                ->select('departmentID','Acgpa')
+                ->whereIn('departmentID', $department)
+                ->get();
+            array_push($arr, ['Department', 'CGPA']);
+            foreach ($data as $d) {
+                array_push($arr, [$d->departmentID,(float)$d->Acgpa]);
+            }
+        }
+        return view('pages/higher_official/departmentcgpa')->with(
+            [
+                'higherO' => $higherO,
+                'username' => $higherO->firstname,
+                'userType' => 'Higher Official',
+                'startDate' => $startDate,
+                'arr' => $arr
+            ]
+        );
+    }
+
+    public function showpC()
+    {
+        $higherO = Session::get('higherO');
+        $startDate = NULL;
+        $endtDate = NULL;
+        $program = NULL;
+        $arr = array();
+        if (!empty(Session::get('startDate'))) {
+            $startDate = (int)Session::get('startDate');
+            $endDate = (int)Session::get('endDate');
+            $program = Session::get('program');
+
+            DB::statement("DROP VIEW IF EXISTS temps;");
+            DB::statement("CREATE VIEW temps AS
+            SELECT p.departmentID,s.programID,AVG(VVVT.cgpa) Acgpa
+            FROM(SELECT studentID,SUM(gpa)/COUNT(gpa) cgpa
+            FROM(SELECT studentID,semesterID,(TgradeWeight/Tcredit) gpa
+            FROM(SELECT vt.studentID,s.semesterID,SUM(vt.gradePoint*noOfCredit) TgradeWeight, SUM(noOfCredit) Tcredit
+            FROM v_transcript vt,sections s, registers r, courses c
+            WHERE vt.sectionID=s.sectionID AND r.studentID=vt.studentID AND s.courseID=c.courseID AND
+            s.semesterID>=$startDate AND s.semesterID<=$endDate
+            GROUP BY vt.studentID,s.semesterID ) VT) VVT
+            GROUP BY studentID)VVVT, students s,programs p
+            WHERE s.studentID=VVVT.studentID AND p.programID=s.programID
+            GROUP BY p.departmentID,s.programID;");
+
+            $data = DB::table('temps')
+                ->select('programID','Acgpa')
+                ->whereIn('programID', $program)
+                ->get();
+            array_push($arr, ['Program', 'CGPA']);
+            foreach ($data as $d) {
+                array_push($arr, [$d->programID,(float)$d->Acgpa]);
+            }
+        }
+        return view('pages/higher_official/programcgpa')->with(
+            [
+                'higherO' => $higherO,
+                'username' => $higherO->firstname,
+                'userType' => 'Higher Official',
+                'startDate' => $startDate,
+                'arr' => $arr
+            ]
+        );
+    }
+
 }

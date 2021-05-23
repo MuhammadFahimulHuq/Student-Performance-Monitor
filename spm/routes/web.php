@@ -60,6 +60,35 @@ Route::get('/schoolEnrollment', [HigerO_D::class, 'showsE']);
 Route::get('/schoolEnrollment/{id}/d', [HigerO_D::class, 'sE']);
 Route::get('/departmentEnrollment', [HigerO_D::class, 'showdE']);
 Route::get('/departmentEnrollment/{id}/d', [HigerO_D::class, 'dE']);
+
+
+Route::get('/schoolcgpa/{id}/d', [HigerO_D::class, 'sC']);
+Route::get('/schoolcgpa', [HigerO_D::class, 'showsC']);
+Route::POST('/hsc/{id}/d', [HigerO_D::class, 'hsc'])->name('hsc');
+
+Route::get('/departmentcgpa/{id}/d', [HigerO_D::class, 'dC']);
+Route::get('/departmentcgpa', [HigerO_D::class, 'showdC']);
+Route::POST('/hdc/{id}/d', [HigerO_D::class, 'hdc'])->name('hdc');
+
+Route::get('/programcgpa/{id}/d', [HigerO_D::class, 'pC']);
+Route::get('/programcgpa', [HigerO_D::class, 'showpC']);
+Route::POST('/hpc/{id}/d', [HigerO_D::class, 'hpc'])->name('hpc');
+
+
+Route::get('/VCcgpa/{id}/d', [HigerO_D::class, 'VC']);
+Route::get('/VCcgpa', [HigerO_D::class, 'showVC']);
+Route::POST('/hVc/{id}/d', [HigerO_D::class, 'hVc'])->name('hVc');
+
+Route::get('/DEANcgpa/{id}/d', [HigerO_D::class, 'DC']);
+Route::get('/DEANcgpa', [HigerO_D::class, 'showDC']);
+Route::POST('/hDc/{id}/d', [HigerO_D::class, 'hDc'])->name('hDc');
+
+Route::get('/HEADcgpa/{id}/d', [HigerO_D::class, 'HC']);
+Route::get('/HEADcgpa', [HigerO_D::class, 'showHC']);
+Route::POST('/hHc/{id}/d', [HigerO_D::class, 'hHc'])->name('hHc');
+
+
+
 Route::get('/programEnrollment', [HigerO_D::class, 'showpE']);
 Route::get('/programEnrollment/{id}/d', [HigerO_D::class, 'pE']);
 Route::get('/courseReportO/{id}/d', [HigerO_D::class, 'cR']);
@@ -69,6 +98,7 @@ Route::POST('/hcrO/{id}/d', [HigerO_D::class, 'hcr'])->name('hcr');
 Route::POST('/hse/{id}/d', [HigerO_D::class, 'hse'])->name('hse');
 Route::POST('/hde/{id}/d', [HigerO_D::class, 'hde'])->name('hde');
 Route::POST('/hpe/{id}/d', [HigerO_D::class, 'hpe'])->name('hpe');
+
 
 
 

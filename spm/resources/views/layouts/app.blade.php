@@ -67,7 +67,7 @@
                 <div class="dropdown">
                     <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
                         <span class="user-icon">
-                            <img src="#" alt="">
+                            <img src="img/Sample_User_Icon.png" alt="">
                         </span>
                         <span class="user-name">
                             {{-- @if (!empty($users->user_id))
