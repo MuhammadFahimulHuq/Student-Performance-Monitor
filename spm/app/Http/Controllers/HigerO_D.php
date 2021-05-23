@@ -241,6 +241,48 @@ class HigerO_D extends Controller
         }
     }
 
+    public function hde(Request $request, $id)
+    {
+        $higherO = Employee::where('employeeID', $id)->first();
+        $department = array();
+        if ($request->input('department1')) array_push($department, $request->input('department1'));
+        if ($request->input('department2')) array_push($department, $request->input('department2'));
+        if ($request->input('department3')) array_push($department, $request->input('department3'));
+        $startDate = $request->input('startDate');
+        $endtDate = $request->input('endDate');
+        if ($startDate <= $endtDate && !empty($department)) {
+            return redirect('/departmentEnrollment')->with([
+                'higherO' => $higherO,
+                'startDate' => $startDate,
+                'endDate' => $endtDate,
+                'department' => $department
+            ]);
+        } else {
+            return redirect()->back()->with(['message' => 'Invalid Range Or No Department Is Selected', 'higherO' => $higherO]);
+        }
+    }
+
+    public function hpe(Request $request, $id)
+    {
+        $higherO = Employee::where('employeeID', $id)->first();
+        $program = array();
+        if ($request->input('program1')) array_push($program, $request->input('program1'));
+        if ($request->input('program2')) array_push($program, $request->input('program2'));
+        if ($request->input('program3')) array_push($program, $request->input('program3'));
+        $startDate = $request->input('startDate');
+        $endtDate = $request->input('endDate');
+        if ($startDate <= $endtDate && !empty($program)) {
+            return redirect('/programEnrollment')->with([
+                'higherO' => $higherO,
+                'startDate' => $startDate,
+                'endDate' => $endtDate,
+                'program' => $program
+            ]);
+        } else {
+            return redirect()->back()->with(['message' => 'Invalid Range Or No Program Is Selected', 'higherO' => $higherO]);
+        }
+    }
+
 
     public function showsE()
     {
@@ -248,65 +290,159 @@ class HigerO_D extends Controller
         $startDate = NULL;
         $endtDate = NULL;
         $school = NULL;
-        $arr= array();
+        $arr = array();
         if (!empty(Session::get('startDate'))) {
             $startDate = Session::get('startDate');
             $endDate = Session::get('endDate');
             $school = Session::get('school');
-            $data=DB::table('enrollment')
-            ->join('semesters','semesters.startDate','=','enrollment.admissionDate')
-            ->select('schoolName','semesterName','amount')
-            ->whereIn('schoolID',$school)
-            ->where('semesterID','>=',$startDate)
-            ->where('semesterID','<=',$endDate)
-            ->get();
+            $data = DB::table('enrollment')
+                ->join('semesters', 'semesters.startDate', '=', 'enrollment.admissionDate')
+                ->select('schoolName', 'semesterName', DB::raw('SUM(amount) amount'))
+                ->whereIn('schoolID', $school)
+                ->where('semesterID', '>=', $startDate)
+                ->where('semesterID', '<=', $endDate)
+                ->groupBy('schoolName', 'semesterName')
+                ->get();
 
-            $semesters= DB::table('semester')
-            ->select('semesterName')
-            ->where('semesterID','>=',$startDate)
-            ->where('semesterID','<=',$endDate)
-            ->get();
+            $semesters = DB::table('semesters')
+                ->select('semesterName')
+                ->where('semesterID', '>=', $startDate)
+                ->where('semesterID', '<=', $endDate)
+                ->get();
 
-            $schools=DB::table('schools')->select('schoolName')->whereIn('schoolID',$school)->get();
-            $temparry=array('semesters');
-            foreach($schools as $s)
-                array_push($temparry,$s->schoolName);
-            array_push($arr,$temparry);
-
-            // FIX
-            foreach($semeters as $s)
-            {
-
+            $schools = DB::table('schools')->select('schoolName')->whereIn('schoolID', $school)->get();
+            $temparry = array('semesters');
+            foreach ($schools as $s)
+                array_push($temparry, $s->schoolName);
+            array_push($arr, $temparry);
+            foreach ($semesters as $sm) {
+                unset($temparry);
+                $temparry = array();
+                array_push($temparry, $sm->semesterName);
+                foreach ($schools as $sc) {
+                    foreach ($data as $d) {
+                        if ($d->schoolName == $sc->schoolName && $d->semesterName == $sm->semesterName)
+                            array_push($temparry, (int)$d->amount);
+                    }
+                }
+                array_push($arr, $temparry);
             }
-            return $arr;
         }
         return view('pages/higher_official/schoolenrollment')->with(
             [
                 'higherO' => $higherO,
                 'username' => $higherO->firstname,
                 'userType' => 'Higher Official',
+                'startDate' => $startDate,
+                'arr' => $arr
             ]
         );
     }
     public function showdE()
     {
         $higherO = Session::get('higherO');
+        $startDate = NULL;
+        $endtDate = NULL;
+        $department = NULL;
+        $arr = array();
+        if (!empty(Session::get('startDate'))) {
+            $startDate = Session::get('startDate');
+            $endDate = Session::get('endDate');
+            $department = Session::get('department');
+            $data = DB::table('enrollment')
+                ->join('semesters', 'semesters.startDate', '=', 'enrollment.admissionDate')
+                ->select('departmentID', 'semesterName', DB::raw('SUM(amount) amount'))
+                ->whereIn('departmentID', $department)
+                ->where('semesterID', '>=', $startDate)
+                ->where('semesterID', '<=', $endDate)
+                ->groupBy('departmentID', 'semesterName')
+                ->get();
+
+            $semesters = DB::table('semesters')
+                ->select('semesterName')
+                ->where('semesterID', '>=', $startDate)
+                ->where('semesterID', '<=', $endDate)
+                ->get();
+
+            $departments = DB::table('departments')->select('departmentID')->whereIn('departmentID', $department)->get();
+            $temparry = array('semesters');
+            foreach ($departments as $s)
+                array_push($temparry, $s->departmentID);
+            array_push($arr, $temparry);
+            foreach ($semesters as $sm) {
+                unset($temparry);
+                $temparry = array();
+                array_push($temparry, $sm->semesterName);
+                foreach ($departments as $sc) {
+                    foreach ($data as $d) {
+                        if ($d->departmentID == $sc->departmentID && $d->semesterName == $sm->semesterName)
+                            array_push($temparry, (int)$d->amount);
+                    }
+                }
+                array_push($arr, $temparry);
+            }
+        }
         return view('pages/higher_official/departmentenrollment')->with(
             [
                 'higherO' => $higherO,
                 'username' => $higherO->firstname,
                 'userType' => 'Higher Official',
+                'startDate' => $startDate,
+                'arr' => $arr
             ]
         );
     }
     public function showpE()
     {
         $higherO = Session::get('higherO');
+        $startDate = NULL;
+        $endtDate = NULL;
+        $program = NULL;
+        $arr = array();
+        if (!empty(Session::get('startDate'))) {
+            $startDate = Session::get('startDate');
+            $endDate = Session::get('endDate');
+            $program = Session::get('program');
+            $data = DB::table('enrollment')
+                ->join('semesters', 'semesters.startDate', '=', 'enrollment.admissionDate')
+                ->select('programID', 'semesterName', DB::raw('SUM(amount) amount'))
+                ->whereIn('programID', $program)
+                ->where('semesterID', '>=', $startDate)
+                ->where('semesterID', '<=', $endDate)
+                ->groupBy('programID', 'semesterName')
+                ->get();
+
+            $semesters = DB::table('semesters')
+                ->select('semesterName')
+                ->where('semesterID', '>=', $startDate)
+                ->where('semesterID', '<=', $endDate)
+                ->get();
+
+            $programs = DB::table('programs')->select('programID')->whereIn('programID', $program)->get();
+            $temparry = array('semesters');
+            foreach ($programs as $s)
+                array_push($temparry, $s->programID);
+            array_push($arr, $temparry);
+            foreach ($semesters as $sm) {
+                unset($temparry);
+                $temparry = array();
+                array_push($temparry, $sm->semesterName);
+                foreach ($programs as $sc) {
+                    foreach ($data as $d) {
+                        if ($d->programID == $sc->programID && $d->semesterName == $sm->semesterName)
+                            array_push($temparry, (int)$d->amount);
+                    }
+                }
+                array_push($arr, $temparry);
+            }
+        }
         return view('pages/higher_official/programenrollment')->with(
             [
                 'higherO' => $higherO,
                 'username' => $higherO->firstname,
                 'userType' => 'Higher Official',
+                'startDate' => $startDate,
+                'arr' => $arr
             ]
         );
     }

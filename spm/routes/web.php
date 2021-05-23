@@ -67,6 +67,8 @@ Route::get('/courseReportO', [HigerO_D::class, 'showcR']);
 Route::POST('/hsrO/{id}/d', [HigerO_D::class, 'hsr'])->name('hsr');
 Route::POST('/hcrO/{id}/d', [HigerO_D::class, 'hcr'])->name('hcr');
 Route::POST('/hse/{id}/d', [HigerO_D::class, 'hse'])->name('hse');
+Route::POST('/hde/{id}/d', [HigerO_D::class, 'hde'])->name('hde');
+Route::POST('/hpe/{id}/d', [HigerO_D::class, 'hpe'])->name('hpe');
 
 
 

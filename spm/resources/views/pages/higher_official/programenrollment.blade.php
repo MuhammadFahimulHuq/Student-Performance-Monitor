@@ -11,7 +11,7 @@
 
 
         var options = {
-        title: 'School-Wise Enrollment',
+        title: 'Program-Wise Enrollment',
         chartArea: {width: '50%'},
         hAxis: {
         title: 'Number Of Student',
@@ -80,7 +80,7 @@
         <div class="col-xl-12 mb-30">
             <div class="card-box height-100-p pd-20">
                 <h2 class="h4 mb-20 text-center">Enrollment</h2>
-                <form action="{{ '/hse/' . $higherO->employeeID . '/d' }}" method="POST" class="d-flex">
+                <form action="{{ '/hpe/' . $higherO->employeeID . '/d' }}" method="POST" class="d-flex">
                     @csrf
                     <label class="mb-20" for="startDate">Choose Starting Date</label>
                     <select class="form-select mb-20" aria-label="Default select example" id="startDate" name="startDate">
@@ -110,14 +110,13 @@
                         <option value="10">spring19</option>
                         <option value="11">summer19</option>
                     </select>
-                    <label for="School">Choose Schools:</label>
-                    <input type="checkbox" id="school1" name="school1" value="1">
-                    <label for="school1">Engineering, Technology & Sciences</label><br>
-                    <input type="checkbox" id="school2" name="school2" value="2">
-                    <label for="school2">Business & Entrepreneurship</label><br>
-                    {{-- <option value="3">Environment And Life Sciences</option>
-                        <option value="4">Liberal Arts & Social Sciences</option>
-                        <option value="5">Pharmacy And Public Health</option> --}}
+                    <label for="Program">Choose Programs:</label>
+                    <input type="checkbox" id="program1" name="program1" value="CSE">
+                    <label for="program1">CSE</label><br>
+                    <input type="checkbox" id="program2" name="program2" value="MIS">
+                    <label for="program2">MIS</label><br>
+                    <input type="checkbox" id="program3" name="program3" value="ACN">
+                    <label for="program3">ACN</label><br>
                     <button class="btn btn-outline-success mb-20" type="submit">Show</button>
                 </form>
                 @if (session()->has('message'))

@@ -272,7 +272,7 @@ DB::statement("INSERT INTO `students` (studentID,firstname,lastname,gender,dateO
 (1768461,'Nasima','Rahman','female','1996-03-03','nasima@gmailcom',1714151216,'H-09  road 103 gulshan dhaka-1212','2017-05-02','MIS',0),
 (1711799,'Suchanda','chauhan','female','1996-03-19','sunochanda@gmailcom',1812060803,'bashundharaR-A dhaka-1229','2017-05-02','MIS',0),
 (1840351,'Towkir','Hawlader','male','1999-03-27','towkir@gmailcom',1742536985,'89-A bashundharaR-A dhaka-1229','2017-05-02','MIS',0),
-(1728129,'Nikita','Jahan','female','1996-01-12','jahan23@gmailcom',1745213432,'H-21  road 114 gulshan dhaka-1212','2017-06-23','MIS',0),
+(1728129,'Nikita','Jahan','female','1996-01-12','jahan23@gmailcom',1745213432,'H-21  road 114 gulshan dhaka-1212','2017-05-02','MIS',0),
 (1781680,'Dev','Sen','male','1996-06-10','dev45@gmailcom',1508587823,'bashundharaR-A dhaka-1229','2017-08-30','ACN',0),
 (1778279,'Pori','Moni','female','1996-09-17','porimoni@gmailcom',1713537320,'kakrail dhaka-1205','2017-08-30','ACN',0),
 (1795659,'Puja','Cherry','female','1996-10-16','pujacherry@gmailcom',1915565825,'taltola dhaka-1207','2017-08-30','ACN',0),
